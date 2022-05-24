@@ -1,5 +1,60 @@
-﻿<h3>ReviewSection</h3>
+﻿@using global::Shared
+@inject IUserService UserService
+@inject IReviewService ReviewService
+
+<h3 align="center">Reviews</h3>
+
+
+@if (_reviews == null)
+{
+    <div>
+        <p>No Reviews found</p>
+    </div>
+}
+else
+{
+    <div>
+        @foreach (var review in _reviews)
+        {
+            <div>
+                <p>
+                    <a href="/user/@review.MadeByUserId">@GetUserName(review.MadeByUserId)</a>
+                </p>
+            </div>
+            <div>
+                <p>
+                    @review.ReviewText
+                </p>
+            </div>
+            <div>
+                <button>Helpful</button>
+                <button>Not Helpful</button>
+            </div>
+        }
+    </div>
+}
+
 
 @code {
+    [Parameter]
+    public int ProductId { get; set; }
+    private List<Review> _reviews;
+    private List<User> _users;
+    private User _user;
 
+    protected override async Task OnParametersSetAsync()
+    {
+        _reviews = await ReviewService.GetReviewsForAProduct(ProductId);
+        _users = await UserService.GetAllUsers();
+    }
+
+    private string GetUserName(int userId)
+    {
+        foreach (var user in _users.Where(user => user.Id == userId))
+        {
+            return user.Name;
+        }
+
+        return "Unknown";
+    }
 }
