@@ -274,6 +274,21 @@ namespace BlazorEcommerce.Server.Data
                     .HasForeignKey(d => d.ToUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                // how should this work?
+                // one user can make many reviews.
+                // one product can have many reviews
+                entity.HasOne(d => d.MadeBy)
+                    .WithMany(p => p.UserReviews)
+                    .HasForeignKey(d => d.MadeByUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+                entity.HasOne(d => d.OnProduct)
+                    .WithMany(p => p.ReviewsOnProduct)
+                    .HasForeignKey(d => d.OnProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
         }
 
 
@@ -282,6 +297,7 @@ namespace BlazorEcommerce.Server.Data
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
