@@ -5,11 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared;
 
 namespace BlazorEcommerce.Shared
 {
     public class Product
     {
+        public virtual ICollection<Review> ReviewsOnProduct { get; set; }
+
+        public Product()
+        {
+            ReviewsOnProduct = new HashSet<Review>();
+        }
+
         public int Id { get; set; }
         [Required]
         public string Title { get; set; } = string.Empty;
@@ -25,5 +33,6 @@ namespace BlazorEcommerce.Shared
         public bool Editing { get; set; } = false;
         [NotMapped]
         public bool IsNew { get; set; } = false;
+
     }
 }
