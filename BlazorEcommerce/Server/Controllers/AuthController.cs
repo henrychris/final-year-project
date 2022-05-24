@@ -22,7 +22,8 @@ namespace BlazorEcommerce.Server.Controllers
             var response = await _authService.Register(
                 new User
                 {
-                    Email = request.Email
+                    Email = request.Email,
+                    Name = request.Name
                 },
                 request.Password);
 
