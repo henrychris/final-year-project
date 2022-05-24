@@ -1,0 +1,11 @@
+﻿@page "/user/{id:int}"
+
+<h3>UserProfile</h3>
+
+<button>Send Message</button>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+}
+    
