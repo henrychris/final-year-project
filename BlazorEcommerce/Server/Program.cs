@@ -9,6 +9,8 @@ global using BlazorEcommerce.Server.Services.OrderService;
 global using BlazorEcommerce.Server.Services.PaymentService;
 global using BlazorEcommerce.Server.Services.AddressService;
 global using BlazorEcommerce.Server.Services.ProductTypeService;
+using BlazorEcommerce.Server.Services.ReviewService;
+using BlazorEcommerce.Server.Services.UserService;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -28,6 +30,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
