@@ -11,6 +11,11 @@
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<bool> CheckIfUserAcceptsMessages(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == userId);
+            return user.AcceptsMessages;
+        }
 
         public async Task<ServiceResponse<User>> GetUserAsync(int userId)
         {

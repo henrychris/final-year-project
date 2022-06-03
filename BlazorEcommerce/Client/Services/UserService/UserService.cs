@@ -21,5 +21,10 @@
             return result;
         }
 
+        public async Task<bool> CheckIfUserAcceptsMessages(int userId)
+        {
+            var result = await _http.GetFromJsonAsync<bool>($"api/user/acceptsmessages{userId}");
+            return result;
+        }
     }
 }

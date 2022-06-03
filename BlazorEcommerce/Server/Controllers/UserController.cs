@@ -30,5 +30,12 @@ namespace BlazorEcommerce.Server.Controllers
             var result = await _userService.GetUsers();
             return Ok(result);
         }
+
+        [HttpGet("acceptsmessages{userId}")]
+        public async Task<ActionResult<bool>> CheckIfUserAcceptsMessages(int userId)
+        {
+            var result = await _userService.CheckIfUserAcceptsMessages(userId);
+            return Ok(result);
+        }
     }
 }

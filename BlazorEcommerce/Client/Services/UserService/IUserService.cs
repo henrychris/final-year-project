@@ -4,5 +4,6 @@
     {
         Task<ServiceResponse<User>> GetById(int id);
         Task<List<User>> GetAllUsers();
+        Task<bool> CheckIfUserAcceptsMessages(int userId);
     }
 }

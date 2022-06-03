@@ -49,6 +49,8 @@ namespace BlazorEcommerce.Server.Services.AuthService
 
         public async Task<ServiceResponse<int>> Register(User user, string password)
         {
+            ClaimsIdentity identity = new();
+
             if (await UserExists(user.Email))
             {
                 return new ServiceResponse<int>
@@ -64,6 +66,12 @@ namespace BlazorEcommerce.Server.Services.AuthService
             user.PasswordSalt = passwordSalt;
 
             _context.Users.Add(user);
+            // manually map the user class, maybe?
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            // wtf gets saved as user.Name
+            // claim.name = user.name = email
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
             await _context.SaveChangesAsync();
 
             return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful!" };

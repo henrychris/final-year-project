@@ -32,5 +32,6 @@ namespace BlazorEcommerce.Shared
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Role { get; set; } = "Customer";
+        public bool AcceptsMessages { get; set; }
     }
 }

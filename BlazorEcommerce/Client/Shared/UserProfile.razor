@@ -1,11 +1,40 @@
 ﻿@page "/user/{id:int}"
 
-<h3>UserProfile</h3>
+<h3>
+    @Email
+</h3>
+@*TODO if user id matches the logged in user, redirect to /profile page*@
+@*TODO what if a person changes the url to match a user who doesn't want messages?*@
 
-<button>Send Message</button>
+@if (AcceptsMessages)
+{
+    <button @onclick="NavigateToUserChat">Send Message</button>
+}
+else
+{
+    <p> Sorry, this user does not accept messages.</p>
+}
 
 @code {
     [Parameter]
     public int Id { get; set; }
+    private string Email { get; set; }
+    private bool AcceptsMessages { get; set; }
+
+    private void NavigateToUserChat()
+    {
+        // Id represents the person we want to send a message to.
+        NavigationManager.NavigateTo($"messages/{Id}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await UserService.GetById(Id);
+        Email = user.Data.Email;
+
+        AcceptsMessages = await UserService.CheckIfUserAcceptsMessages(Id);
+    }
+    // function to get user details.
+
+
 }
-    

@@ -27,6 +27,16 @@
         <InputText id="confirmPassword" @bind-Value="user.ConfirmPassword" class="form-control" type="password" />
         <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
+    <div class="mb-3">
+        <label for="acceptMessages">Do you accept to receive messages from other users (e.g To ask for additional information on a product)?</label>
+        <InputRadioGroup id="allowMessages" @bind-Value="user.AcceptsMessages" class="form-control">
+            <div>
+                <InputRadio Value="true" /> Yes
+                <br />
+                <InputRadio Value="false" /> No
+            </div>
+        </InputRadioGroup>
+    </div>
     <button type="submit" class="btn btn-primary">Register</button>
     <div class="@messageCssClass">
         <span>@message</span>
@@ -44,7 +54,10 @@
         var result = await AuthService.Register(user);
         message = result.Message;
         if (result.Success)
+        {
             messageCssClass = "text-success";
+            NavigationManager.NavigateTo("");
+        }
         else
             messageCssClass = "text-danger";
     }
