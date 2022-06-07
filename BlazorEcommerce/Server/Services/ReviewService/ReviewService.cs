@@ -5,12 +5,10 @@ namespace BlazorEcommerce.Server.Services.ReviewService;
 public class ReviewService : IReviewService
 {
     private readonly DataContext _context;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public ReviewService(DataContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
-        _httpContextAccessor = httpContextAccessor;
     }
     public async Task<ServiceResponse<Review>> CheckIfUserPurchasedProduct(Review review)
     {

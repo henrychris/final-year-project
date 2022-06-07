@@ -15,10 +15,10 @@ namespace BlazorEcommerce.Client.Services.ReviewService
         public int CurrentPage { get; set; } = 1;
         public int PageCount { get; set; } = 0;
         public string Message { get; set; } = "Loading reviews...";
-        public async Task<Review> CreateReview(Review review)
+        public async Task<ServiceResponse<Review>> CreateReview(Review review)
         {
             var result = await _http.PostAsJsonAsync("api/review", review);
-            var newReview = (await result.Content.ReadFromJsonAsync<ServiceResponse<Review>>()).Data;
+            var newReview = (await result.Content.ReadFromJsonAsync<ServiceResponse<Review>>());
             return newReview;
         }
 

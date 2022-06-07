@@ -13,7 +13,7 @@
 }
 else
 {
-    <div>
+    <div class="mb-3">
         @foreach (var review in _reviews)
         {
             <div>
@@ -46,9 +46,21 @@ else
         }
     </div>
 }
-@* <div>
-    TextBox / Form
-</div> *@
+<div class="mb-3">
+    <label>
+        <EditForm Model="@newReview" OnValidSubmit="@HandleValidSubmit">
+            New Review:
+            <div>
+                <InputTextArea @bind-Value="newReview.ReviewText" class="form-control" />
+            </div>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-primary">Post Review </button>
+            </div>
+        </EditForm>
+    </label>
+
+</div>
 
 
 @code {
@@ -56,9 +68,12 @@ else
     public int ProductId { get; set; }
     private List<Review> _reviews;
     private List<User> _users;
-    private User _user;
+    @* private User _user; *@
     private int _loggedInUserId;
     private int _likeCount;
+    // this like count attr is shared by all reviews. that is not smart.
+
+    private Review newReview = new();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -67,8 +82,29 @@ else
 
         var state = await StateProvider.GetAuthenticationStateAsync();
         var loggedInUserState = state.User;
-        _loggedInUserId = Convert.ToInt32(loggedInUserState.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault());
+        _loggedInUserId = Convert.ToInt32(loggedInUserState.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a =>
+        a.Value).FirstOrDefault());
+    }
 
+    private async Task HandleValidSubmit()
+    {
+        newReview.MadeByUserId = _loggedInUserId;
+        newReview.OnProductId = ProductId;
+
+        var result = await ReviewService.CreateReview(newReview);
+        if (result.Success)
+        {
+            System.Console.WriteLine(result.Message);
+            NavigationManager.NavigateTo("");
+            NavigationManager.NavigateTo($"product/{ProductId}");
+        }
+        else
+        {
+            System.Console.WriteLine(result.Message);
+            NavigationManager.NavigateTo("");
+            NavigationManager.NavigateTo($"product/{ProductId}");
+            //   todo use snackbar to add notification
+        }
     }
 
     private string GetUserName(int userId)
@@ -77,7 +113,6 @@ else
         {
             return user.Name;
         }
-
         return "Unknown";
     }
 

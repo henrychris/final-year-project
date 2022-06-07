@@ -8,7 +8,7 @@ public interface IReviewService
     int PageCount { get; set; }
     string Message { get; set; }
     public List<Review> Reviews { get; set; }
-    Task<Review> CreateReview(Review review);
+    Task<ServiceResponse<Review>> CreateReview(Review review);
     Task DeleteReview(Review review);
     Task<List<Review>> GetReviewsForAProduct(int productId);
 }
