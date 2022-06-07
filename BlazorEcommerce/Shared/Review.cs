@@ -18,6 +18,7 @@ namespace Shared
         public virtual User MadeBy { get; set; }
         public virtual Product OnProduct { get; set; }
 
+        public ICollection<ReviewLikes> LikedByUsers { get; set; }
         // might need to update this later on.
     }
 }

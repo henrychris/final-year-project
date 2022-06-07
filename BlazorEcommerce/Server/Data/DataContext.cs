@@ -289,6 +289,27 @@ namespace BlazorEcommerce.Server.Data
                     .HasForeignKey(d => d.OnProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            modelBuilder.Entity<ReviewLikes>(entity =>
+            {
+                entity.HasKey(k => new { k.LikedByUserId, k.LikedReviewId });
+            });
+
+            modelBuilder.Entity<ReviewLikes>(entity =>
+            {
+                entity.HasOne(k => k.LikedByUser)
+                    .WithMany(l => l.UserReviewLikes)
+                    .HasForeignKey(k => k.LikedByUserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ReviewLikes>(entity =>
+            {
+                entity.HasOne(s => s.LikedReview)
+                    .WithMany(k => k.LikedByUsers)
+                    .HasForeignKey(f => f.LikedReviewId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
 
@@ -303,5 +324,6 @@ namespace BlazorEcommerce.Server.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }    
+        public DbSet<ReviewLikes> ReviewLikes { get; set; }
     }
 }

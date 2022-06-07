@@ -12,6 +12,7 @@ namespace BlazorEcommerce.Shared
     {
         public virtual ICollection<ChatMessage> ChatMessagesFromUsers { get; set; }
         public virtual ICollection<Review> UserReviews { get; set; }
+        public ICollection<ReviewLikes> UserReviewLikes { get; set; }
         public virtual ICollection<ChatMessage> ChatMessagesToUsers { get; set; }
 
         public User()
@@ -19,6 +20,7 @@ namespace BlazorEcommerce.Shared
             ChatMessagesFromUsers = new HashSet<ChatMessage>();
             ChatMessagesToUsers = new HashSet<ChatMessage>();
             UserReviews = new HashSet<Review>();
+            UserReviewLikes = new HashSet<ReviewLikes>();
         }
 
         // add list of order history and foreign key.

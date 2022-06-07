@@ -27,12 +27,28 @@ else
                 </p>
             </div>
             <div>
-                <button>Helpful</button>
-                <button>Not Helpful</button>
+                <button @onclick="@(e => AddLikeAndUpdateCount(@review.Id, @review.MadeByUserId))">Helpful</button>
+                <br>
+                @switch (_likeCount)
+                {
+                    case > 1:
+                        @_likeCount <div> people found this helpful. </div>
+                        break;
+                    case 1:
+                        <div> One person found this helpful. </div>
+                        break;
+                    default:
+                        <div> No one found this helpful.</div>
+                        break;
+                }
+
             </div>
         }
     </div>
 }
+@* <div>
+    TextBox / Form
+</div> *@
 
 
 @code {
@@ -41,11 +57,18 @@ else
     private List<Review> _reviews;
     private List<User> _users;
     private User _user;
+    private int _loggedInUserId;
+    private int _likeCount;
 
     protected override async Task OnParametersSetAsync()
     {
         _reviews = await ReviewService.GetReviewsForAProduct(ProductId);
         _users = await UserService.GetAllUsers();
+
+        var state = await StateProvider.GetAuthenticationStateAsync();
+        var loggedInUserState = state.User;
+        _loggedInUserId = Convert.ToInt32(loggedInUserState.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault());
+
     }
 
     private string GetUserName(int userId)
@@ -56,5 +79,13 @@ else
         }
 
         return "Unknown";
+    }
+
+    private async Task AddLikeAndUpdateCount(int reviewId, int reviewMadeByUserId)
+    {
+        await LikesService.AddLike(reviewId, reviewMadeByUserId, _loggedInUserId);
+        _likeCount = await LikesService.GetLikeCountForAReview(reviewId);
+        StateHasChanged();
+        // TODO add like count to review table?
     }
 }
