@@ -32,7 +32,15 @@ else
         }
         else
         {
-            await ProductService.GetProducts(CategoryUrl);
+            try
+            {
+                await ProductService.GetProducts(CategoryUrl);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
     }
 }
