@@ -1,11 +1,12 @@
 ﻿@page "/register"
 @inject IAuthService AuthService
+@inject ICategoryService CategoryService
 
 <PageTitle>Register</PageTitle>
 
 <h3>Register</h3>
 
-<EditForm Model="user" OnValidSubmit="HandleRegistration">
+<EditForm Model="user" OnValidSubmit="HandleRegistration" OnInvalidSubmit="HandleInvalidRegistration" id="registerForm">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="name">Name</label>
@@ -28,8 +29,11 @@
         <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
     <div class="mb-3">
-        <label for="acceptMessages">Do you accept to receive messages from other users (e.g To ask for additional information on a product)?</label>
-        <InputRadioGroup id="allowMessages" @bind-Value="user.AcceptsMessages" class="form-control">
+        <label for="acceptMessages">
+            Do you accept to receive messages from other users (e.g To ask for additional
+            information on a product)?
+        </label>
+        <InputRadioGroup id="acceptMessages" @bind-Value="user.AcceptsMessages" class="form-control">
             <div>
                 <InputRadio Value="true" /> Yes
                 <br />
@@ -37,28 +41,81 @@
             </div>
         </InputRadioGroup>
     </div>
+   @* <div class="mb-3">
+        <label>Please select the categories that interest you:</label>
+        <br />
+        @foreach (var item in AllCategories)
+        {
+            <input type="checkbox" @onchange="eventArgs => { CheckboxClicked(item, eventArgs.Value); }" />
+            @item.Name
+            <br>
+        }
+        <ValidationMessage For="@(() => user.UserInterests)" />
+    </div>*@
+
     <button type="submit" class="btn btn-primary">Register</button>
-    <div class="@messageCssClass">
-        <span>@message</span>
+
+    <div class="@_messageCssClass">
+        <span>@_message</span>
     </div>
 </EditForm>
 
-@code {
-    UserRegister user = new UserRegister();
 
-    string message = string.Empty;
-    string messageCssClass = string.Empty;
+
+@code {
+    UserRegister user = new();
+    //public ICollection<Category> AllCategories = new List<Category>();
+    //public ICollection<Category> UserCategories { get; set; } = new List<Category>();
+
+    string _message = string.Empty;
+    string _messageCssClass = string.Empty;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await CategoryService.GetCategories();
+    //    AllCategories = CategoryService.Categories;
+    //}
+
+    //public void CheckboxClicked(Category category, object checkedValue)
+    //{
+    //    if ((bool)checkedValue)
+    //    {
+    //        if (!UserCategories.Contains(category))
+    //        {
+    //            UserCategories.Add(category);
+    //            Console.WriteLine($"Added {category.Name}");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (UserCategories.Contains(category))
+    //        {
+    //            UserCategories.Remove(category);
+    //            Console.WriteLine($"Removed {category.Name}");
+    //        }
+    //    }
+    //    user.UserInterests = UserCategories;
+    //}
 
     async Task HandleRegistration()
     {
         var result = await AuthService.Register(user);
-        message = result.Message;
+        _message = result.Message;
         if (result.Success)
         {
-            messageCssClass = "text-success";
+            _messageCssClass = "text-success";
             NavigationManager.NavigateTo("");
         }
         else
-            messageCssClass = "text-danger";
+            _messageCssClass = "text-danger";
     }
+
+    void HandleInvalidRegistration()
+    {
+        _message = "Something went wrong.";
+    }
+
 }
+
+
+

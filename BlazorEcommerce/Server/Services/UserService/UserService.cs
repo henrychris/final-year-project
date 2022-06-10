@@ -3,12 +3,10 @@
     public class UserService : IUserService
     {
         private readonly DataContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(DataContext context, IHttpContextAccessor httpContextAccessor)
+        public UserService(DataContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> CheckIfUserAcceptsMessages(int userId)
@@ -31,6 +29,11 @@
         public async Task<List<User>> GetUsers()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        public async Task<bool> SaveAllChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

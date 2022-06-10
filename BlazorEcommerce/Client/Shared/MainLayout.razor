@@ -11,7 +11,27 @@
         </div>
 
         <article class="content px-4">
-            @Body
+            <CascadingValue Value="_hubConnection">
+                @Body
+            </CascadingValue>
         </article>
     </main>
 </div>
+
+@code {
+
+    private HubConnection _hubConnection;
+    private int CurrentUserId { get; set; }
+    public bool IsConnected => _hubConnection.State == HubConnectionState.Connected;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/chathub")).Build();
+        await _hubConnection.StartAsync();
+        
+        var state = await StateProvider.GetAuthenticationStateAsync();
+        var user = state.User;
+        CurrentUserId = Convert.ToInt32(user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault());
+    }
+
+}

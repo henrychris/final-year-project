@@ -1,8 +1,5 @@
-﻿using BlazorEcommerce.Server.Services.ReviewService;
-using BlazorEcommerce.Server.Services.UserService;
-using Microsoft.AspNetCore.Authorization;
+﻿using BlazorEcommerce.Server.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
-using Shared;
 
 namespace BlazorEcommerce.Server.Controllers
 {
@@ -31,7 +28,7 @@ namespace BlazorEcommerce.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("acceptsmessages{userId}")]
+        [HttpGet("acceptsmessages/{userId}")]
         public async Task<ActionResult<bool>> CheckIfUserAcceptsMessages(int userId)
         {
             var result = await _userService.CheckIfUserAcceptsMessages(userId);

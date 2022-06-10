@@ -20,5 +20,8 @@ namespace BlazorEcommerce.Shared
 
         [Required]
         public bool AcceptsMessages { get; set; }
+
+        //[Required]
+        //public ICollection<Category> UserInterests { get; set; }
     }
 }

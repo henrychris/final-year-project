@@ -1,0 +1,14 @@
+.review-card {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: fit-content;
+}
+
+.review-card #review {
+    border-bottom: 1px solid black;
+}
+
+.helpful-text {
+    margin: 0;
+}

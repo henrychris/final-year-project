@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Shared;
 
 namespace BlazorEcommerce.Shared
@@ -25,7 +20,7 @@ namespace BlazorEcommerce.Shared
 
         // add list of order history and foreign key.
         public Address Address { get; set; }
-        
+
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public string Email { get; set; } = string.Empty;
 

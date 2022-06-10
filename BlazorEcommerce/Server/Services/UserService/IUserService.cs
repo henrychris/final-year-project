@@ -5,5 +5,6 @@
         Task<ServiceResponse<User>> GetUserAsync(int userId);
         Task<List<User>> GetUsers();
         Task<bool> CheckIfUserAcceptsMessages(int userId);
+        Task<bool> SaveAllChangesAsync();
     }
 }

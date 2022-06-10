@@ -14,36 +14,46 @@
 else
 {
     <div class="mb-3">
-        @foreach (var review in _reviews)
-        {
-            <div>
-                <p>
-                    <a href="/user/@review.MadeByUserId">@GetUserName(review.MadeByUserId)</a>
-                </p>
-            </div>
-            <div>
-                <p>
-                    @review.ReviewText
-                </p>
-            </div>
-            <div>
-                <button @onclick="@(e => AddLikeAndUpdateCount(@review.Id, @review.MadeByUserId))">Helpful</button>
-                <br>
-                @switch (_likeCount)
-                {
-                    case > 1:
-                        @_likeCount <div> people found this helpful. </div>
-                        break;
-                    case 1:
-                        <div> One person found this helpful. </div>
-                        break;
-                    default:
-                        <div> No one found this helpful.</div>
-                        break;
-                }
+        <ul class="review-card">
+            @foreach (var review in _reviews)
+            {
+                <li>
+                    <div id="review">
+                        <div>
+                            <p>
+                                <a href="/user/@review.MadeByUserId">
+                                    <b>@GetUserName(review.MadeByUserId)</b>
+                                </a>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                @review.ReviewText
+                            </p>
+                        </div>
+                        <div>
+                            @*<button @onclick="@(e => AddLike(@review.Id, @review.MadeByUserId))">Helpful</button>
+                            @* here... i am not sure how to update the like count cleanly
+                            @switch (_likeCount)
+                            {
+                                case > 1:
+                                    @_likeCount <p class="helpful-text"> people found this helpful. </p>
+                                    break;
+                                case 1:
+                                    <p class="helpful-text"> 1 person found this helpful. </p>
+                                    break;
+                                default:
+                                    <p class="helpful-text"> No one found this helpful.</p>
+                                    break;
+                            }
+                            *@
 
-            </div>
-        }
+                        </div>
+
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
 }
 <div class="mb-3">
@@ -71,7 +81,7 @@ else
     @* private User _user; *@
     private int _loggedInUserId;
     private int _likeCount;
-    // this like count attr is shared by all reviews. that is not smart.
+    // todo this like count attr is shared by all reviews. that is not smart.
 
     private Review newReview = new();
 
@@ -84,6 +94,14 @@ else
         var loggedInUserState = state.User;
         _loggedInUserId = Convert.ToInt32(loggedInUserState.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a =>
         a.Value).FirstOrDefault());
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        @* use signalR to send notification that user has viewed message
+            Maybe add boolean value to track Seen/Delivered?
+        *@
+        return base.OnAfterRenderAsync(firstRender);
     }
 
     private async Task HandleValidSubmit()
@@ -103,7 +121,7 @@ else
             System.Console.WriteLine(result.Message);
             NavigationManager.NavigateTo("");
             NavigationManager.NavigateTo($"product/{ProductId}");
-            //   todo use snackbar to add notification
+            // todo use snackbar to add notification
         }
     }
 
@@ -116,7 +134,7 @@ else
         return "Unknown";
     }
 
-    private async Task AddLikeAndUpdateCount(int reviewId, int reviewMadeByUserId)
+    private async Task AddLike(int reviewId, int reviewMadeByUserId)
     {
         await LikesService.AddLike(reviewId, reviewMadeByUserId, _loggedInUserId);
         _likeCount = await LikesService.GetLikeCountForAReview(reviewId);

@@ -1,8 +1,48 @@
-﻿@page "/messages"
+﻿@page "/messages/{ContactId:int}"
+@page "/messages"
 
-<h3>Messages</h3>
+@if (ContactId == 0)
+{
+    @*Get list of users to chat with, front and center, minus the current user.*@
+    @foreach (var chat in ChatUsers)
+    {
+        <div>
+            @* it appears as plain text, so use css*@
+            <button class="btn" @onclick="() => NavigateToGivenId(chat.Id)">@chat.Name</button>
+        </div>
+    }
+}
+else if (ContactId != 0 && UserAcceptsMessages != false)
+{
+    <h3 id="email-header">You are messaging <strong>@ContactEmail</strong>.</h3>
+    
+    <div id="chat-container" @ref="_chatElementReference">
+        <ul class="chat">
+            @foreach (var message in _messages)
+            {
+                @if (message.FromUser.Email != ContactEmail)
+                {
+                    <li> <strong>You:</strong> @message.Message</li>
+                }
+                else
+                {
+                    <li> @ContactEmail: @message.Message</li>
+                }
+            }
+        </ul>
+    </div>
+    <div>
+        <label>
+            Message:
+            <input class="form-control" @bind="CurrentMessage"/>
+        </label>
+    </div>
+    <button class="btn-primary" @onclick="SendAsync">Send</button>
 
-@* Add a table/grid listing out all the messages, sorted by date. *@
-@code {
-
+    <hr>
+}
+else
+{
+    <h3> @ContactEmail </h3>
+    <p> Sorry, this user does not accept messages.</p>
 }
