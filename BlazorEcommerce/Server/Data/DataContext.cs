@@ -51,6 +51,18 @@ namespace BlazorEcommerce.Server.Data
                     Id = 3,
                     Name = "Video Games",
                     Url = "video-games"
+                },
+                new Category
+                {
+                    Id = 4,
+                    Name = "Sports",
+                    Url = "sports"
+                },
+                new Category
+                {
+                    Id = 5,
+                    Name = "Clothing",
+                    Url = "clothing"
                 }
                 );
 
@@ -146,11 +158,101 @@ namespace BlazorEcommerce.Server.Data
                         CategoryId = 3,
                         Title = "Super Nintendo Entertainment System",
                         Description = "The Super Nintendo Entertainment System (SNES), also known as the Super NES or Super Nintendo, is a 16-bit home video game console developed by Nintendo that was released in 1990 in Japan and South Korea.",
-                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
+                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg"
+                    },
+                    new Product
+                    {
+                        Id = 17,
+                        CategoryId = 4,
+                        Title = "Nike Hypervenom",
+                        Description = "The Nike Hypervenom is a football boot manufactured by Nike. This type of boot is said to be for traction, power, and agility, designed for deceptive players. Therefore, it is endorsed/worn by players, notably forwards, such as Robert Lewandowski, Harry Kane, Edinson Cavani, Gonzalo Higuaín, Mauro Icardi and Thiago. In 2017, 18-year-old prodigy Kylian Mbappé was given his own personalised boots, the Nike Hypervenom 3.",
+                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/HypervenomX_Finale_Turf.jpg/250px-HypervenomX_Finale_Turf.jpg"
+                    },
+                    new Product
+                    {
+                        Id = 12,
+                        CategoryId = 4,
+                        Title = "Adidas Telstar 18",
+                        Description = "The Adidas Telstar 18 was the official match ball of the 2018 FIFA World Cup, which was held in the Russian Federation. It was designed by the company Adidas, a FIFA Partner and FIFA World Cup official match ball supplier since 1970, and based on the concept of the first Adidas's World Cup match ball.",
+                        ImageUrl = "https://images.unsplash.com/photo-1511886929837-354d827aae26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
+                    },
+                    new Product
+                    {
+                        Id = 13,
+                        CategoryId = 4,
+                        Title = "Liverpool FC 21/22 Home Kit",
+                        Description = "Pure and simply Liverpudlian red. Show that your support means more than any other club with this Liverpool home Stadium shirt.",
+                        ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/06/9.jpg"
+                    },
+                    new Product
+                    {
+                        Id = 14,
+                        CategoryId = 5,
+                        Title = "Adidas U_Path Run Shoes – Black",
+                        Description = "Run with it. Step into these adidas U_Path Run Shoes and take your style game to the finish line. With a sleek feel and futuristic look, the mesh upper has a bungee heel overlay that delivers stretchy support. Move in comfort all day with the EVA midsole.",
+                        ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/28-1.jpg"
+                    },
+                    new Product
+                    {
+                        Id = 15,
+                        CategoryId = 5,
+                        Title = "Nike Winflo 8 Running Sneaker",
+                        Description = "The Nike Winflo 8 brings back the cushioning you love and pairs it with details like a translucent upper and Flywire technology. The result is better stability for long runs.",
+                        ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/05/38-1.jpg"
+                    },
+                    new Product
+                    {
+                        Id = 16,
+                        CategoryId = 5,
+                        Title = "Adidas Run Falcon 2.0 Shoes",
+                        Description = "Strap up in these adidas running shoes and you’re set for a jog in the park followed by coffee with friends. With a mesh upper for outstanding breathability, they’re meant to deliver comfort all day long. A durable rubber outsole gives you a solid foundation no matter how busy your schedule.",
+                        ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_800,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/20.webp"
                     }
-                    );
+            );
 
             modelBuilder.Entity<ProductVariant>().HasData(
+                new ProductVariant
+                {
+                    ProductId = 17,
+                    ProductTypeId = 1,
+                    Price = 229.99m,
+                    OriginalPrice = 229.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 12,
+                    ProductTypeId = 1,
+                    Price = 59.99m,
+                    OriginalPrice = 59.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 13,
+                    ProductTypeId = 1,
+                    Price = 29.99m,
+                    OriginalPrice = 29.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 14,
+                    ProductTypeId = 1,
+                    Price = 132.99m,
+                    OriginalPrice = 132.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 15,
+                    ProductTypeId = 1,
+                    Price = 109.99m,
+                    OriginalPrice = 109.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 16,
+                    ProductTypeId = 1,
+                    Price = 90.00m,
+                    OriginalPrice = 90.00m
+                },
                 new ProductVariant
                 {
                     ProductId = 1,
@@ -310,6 +412,14 @@ namespace BlazorEcommerce.Server.Data
                     .HasForeignKey(f => f.LikedReviewId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            //modelBuilder.Entity<Category>(entity =>
+            //{
+            //    entity.HasOne(k => k.User)
+            //        .WithMany(c => c.UserCategories)
+            //        .HasForeignKey(u => u.UserId)
+            //        .OnDelete(DeleteBehavior.Cascade);
+            //});
         }
 
 

@@ -4,6 +4,7 @@ using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorEcommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220611085759_NewProductPrices")]
+    partial class NewProductPrices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -559,7 +561,7 @@ namespace BlazorEcommerce.Server.Migrations
                             ProductTypeId = 1,
                             Deleted = false,
                             OriginalPrice = 109.99m,
-                            Price = 109.99m,
+                            Price = 0m,
                             Visible = true
                         },
                         new
@@ -568,7 +570,7 @@ namespace BlazorEcommerce.Server.Migrations
                             ProductTypeId = 1,
                             Deleted = false,
                             OriginalPrice = 90.00m,
-                            Price = 90.00m,
+                            Price = 0m,
                             Visible = true
                         },
                         new
