@@ -32,6 +32,7 @@
         var state = await StateProvider.GetAuthenticationStateAsync();
         var user = state.User;
         CurrentUserId = Convert.ToInt32(user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault());
+        StateHasChanged();
     }
 
 }

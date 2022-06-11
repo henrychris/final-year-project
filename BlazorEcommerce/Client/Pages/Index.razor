@@ -26,6 +26,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        StateHasChanged();
         if (SearchText != null)
         {
             await ProductService.SearchProducts(SearchText, Page);
