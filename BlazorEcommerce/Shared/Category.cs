@@ -4,6 +4,7 @@ namespace BlazorEcommerce.Shared
 {
     public class Category
     {
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
@@ -13,5 +14,6 @@ namespace BlazorEcommerce.Shared
         public bool Editing { get; set; } = false;
         [NotMapped]
         public bool IsNew { get; set; } = false;
+
     }
 }

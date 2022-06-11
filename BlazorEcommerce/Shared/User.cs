@@ -24,11 +24,13 @@ namespace BlazorEcommerce.Shared
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public string Email { get; set; } = string.Empty;
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; } // add migration
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Role { get; set; } = "Customer";
         public bool AcceptsMessages { get; set; }
+        public UserInterest UserInterests { get; set; }
     }
 }

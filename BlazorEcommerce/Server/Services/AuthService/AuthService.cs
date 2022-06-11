@@ -69,7 +69,7 @@ namespace BlazorEcommerce.Server.Services.AuthService
             // manually map the user class, maybe?
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             // wtf gets saved as user.Name
-            // claim.name = user.name = email
+            // claim.name == user.name == email
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
             await _context.SaveChangesAsync();

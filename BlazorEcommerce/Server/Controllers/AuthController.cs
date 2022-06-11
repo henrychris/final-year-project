@@ -25,7 +25,7 @@ namespace BlazorEcommerce.Server.Controllers
                     Email = request.Email,
                     Name = request.Name,
                     AcceptsMessages = request.AcceptsMessages,
-                    //UserInterests = request.UserInterests
+                    UserInterests = request.UserInterests,
                 },
                 request.Password);
 

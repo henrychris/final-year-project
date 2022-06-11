@@ -6,5 +6,6 @@
         Task<List<User>> GetUsers();
         Task<bool> CheckIfUserAcceptsMessages(int userId);
         Task<bool> SaveAllChangesAsync();
+        Task<List<Category>> GetUserInterests(int id);
     }
 }

@@ -41,7 +41,7 @@
             </div>
         </InputRadioGroup>
     </div>
-   @* <div class="mb-3">
+    <div class="mb-3">
         <label>Please select the categories that interest you:</label>
         <br />
         @foreach (var item in AllCategories)
@@ -50,8 +50,9 @@
             @item.Name
             <br>
         }
+
         <ValidationMessage For="@(() => user.UserInterests)" />
-    </div>*@
+    </div>
 
     <button type="submit" class="btn btn-primary">Register</button>
 
@@ -64,41 +65,91 @@
 
 @code {
     UserRegister user = new();
-    //public ICollection<Category> AllCategories = new List<Category>();
-    //public ICollection<Category> UserCategories { get; set; } = new List<Category>();
+    private ICollection<Category> AllCategories = new List<Category>();
+    private ICollection<Category> UserCategories { get; set; } = new List<Category>();
+
+    private UserInterest _userInterests = new();
 
     string _message = string.Empty;
     string _messageCssClass = string.Empty;
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    await CategoryService.GetCategories();
-    //    AllCategories = CategoryService.Categories;
-    //}
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+        AllCategories = CategoryService.Categories;
+    }
 
-    //public void CheckboxClicked(Category category, object checkedValue)
-    //{
-    //    if ((bool)checkedValue)
-    //    {
-    //        if (!UserCategories.Contains(category))
-    //        {
-    //            UserCategories.Add(category);
-    //            Console.WriteLine($"Added {category.Name}");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (UserCategories.Contains(category))
-    //        {
-    //            UserCategories.Remove(category);
-    //            Console.WriteLine($"Removed {category.Name}");
-    //        }
-    //    }
-    //    user.UserInterests = UserCategories;
-    //}
+    private void CheckboxClicked(Category category, object checkedValue)
+    {
+        if ((bool)checkedValue)
+        {
+            if (!UserCategories.Contains(category))
+            {
+                UserCategories.Add(category);
+                Console.WriteLine($"Added {category.Name}");
+            }
+        }
+        else
+        {
+            if (UserCategories.Contains(category))
+            {
+                UserCategories.Remove(category);
+                Console.WriteLine($"Removed {category.Name}");
+            }
+        }
+
+        // temporary assignment to save processing time
+        // otherwise ConvertToBooleanList would run on each checkbox click
+        user.UserInterests = new UserInterest
+            {
+                Default = true
+            };
+    }
+
+    private void ConvertToBooleanList(ICollection<Category> categories)
+    {
+        _userInterests.Default = false;
+
+        if (!categories.Any())
+        {
+            categories.Add(new Category
+                {
+                    Name = "Default"
+                });
+        }
+
+        foreach (var item in categories)
+        {
+            switch (item.Name)
+            {
+                case "Books":
+                    _userInterests.Books = true;
+                    break;
+                case "Movies":
+                    _userInterests.Movies = true;
+                    break;
+                case "Video Games":
+                    _userInterests.VideoGames = true;
+                    break;
+                case "Sports":
+                    _userInterests.Sports = true;
+                    break;
+                case "Clothing":
+                    _userInterests.Clothing = true;
+                    break;
+                default:
+                    _userInterests.Default = true;
+                    break;
+            }
+        }
+    }
 
     async Task HandleRegistration()
     {
+        // function to convert categories to boolean class.
+        ConvertToBooleanList(UserCategories);
+        user.UserInterests = _userInterests;
+
         var result = await AuthService.Register(user);
         _message = result.Message;
         if (result.Success)
@@ -116,6 +167,5 @@
     }
 
 }
-
 
 
