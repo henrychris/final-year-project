@@ -24,6 +24,8 @@ else
                                 <a href="/user/@review.MadeByUserId">
                                     <b>@GetUserName(review.MadeByUserId)</b>
                                 </a>
+                                <br />
+                                <RadzenRating ReadOnly="true" Stars="@review.Rating" Value="@review.Rating" />
                             </p>
                         </div>
                         <div>
@@ -33,23 +35,21 @@ else
                         </div>
                         <div>
                             @*<button @onclick="@(e => AddLike(@review.Id, @review.MadeByUserId))">Helpful</button>
-                            @* here... i am not sure how to update the like count cleanly
-                            @switch (_likeCount)
-                            {
+                                @* here... i am not sure how to update the like count cleanly
+                                @switch (_likeCount)
+                                {
                                 case > 1:
-                                    @_likeCount <p class="helpful-text"> people found this helpful. </p>
-                                    break;
+                                @_likeCount <p class="helpful-text"> people found this helpful. </p>
+                                break;
                                 case 1:
-                                    <p class="helpful-text"> 1 person found this helpful. </p>
-                                    break;
+                                <p class="helpful-text"> 1 person found this helpful. </p>
+                                break;
                                 default:
-                                    <p class="helpful-text"> No one found this helpful.</p>
-                                    break;
-                            }
+                                <p class="helpful-text"> No one found this helpful.</p>
+                                break;
+                                }
                             *@
-
                         </div>
-
                     </div>
                 </li>
             }
@@ -58,10 +58,13 @@ else
 }
 <div class="mb-3">
     <label>
-        <EditForm Model="@newReview" OnValidSubmit="@HandleValidSubmit">
+        <EditForm Model="@_newReview" OnValidSubmit="@HandleValidSubmit">
             New Review:
             <div>
-                <InputTextArea @bind-Value="newReview.ReviewText" class="form-control" />
+                <RadzenRating @bind-Value="@_tempRating" Stars="5" />
+            </div>
+            <div>
+                <InputTextArea @bind-Value="_newReview.ReviewText" class="form-control" />
             </div>
             <br>
             <div>
@@ -69,7 +72,7 @@ else
             </div>
         </EditForm>
     </label>
-
+    <RadzenNotification />
 </div>
 
 
@@ -78,12 +81,15 @@ else
     public int ProductId { get; set; }
     private List<Review> _reviews;
     private List<User> _users;
-    @* private User _user; *@
+    List<OrderOverviewResponse> _orders = null;
     private int _loggedInUserId;
-    private int _likeCount;
+    public bool UserPurchasedProduct = false;
+    private Product Product { get; set; }
+    //private int _likeCount;
     // todo this like count attr is shared by all reviews. that is not smart.
 
-    private Review newReview = new();
+    private int _tempRating;
+    private Review _newReview = new();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -94,34 +100,58 @@ else
         var loggedInUserState = state.User;
         _loggedInUserId = Convert.ToInt32(loggedInUserState.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a =>
         a.Value).FirstOrDefault());
+
+        _orders = await OrderService.GetOrders();
+        Product = await GetProduct();
     }
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        @* use signalR to send notification that user has viewed message
-            Maybe add boolean value to track Seen/Delivered?
-        *@
-        return base.OnAfterRenderAsync(firstRender);
-    }
+    //protected override Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    @* use signalR to send notification that user has viewed message
+    //        Maybe add boolean value to track Seen/Delivered?
+    //    *@
+    //    return base.OnAfterRenderAsync(firstRender);
+    //}
 
     private async Task HandleValidSubmit()
     {
-        newReview.MadeByUserId = _loggedInUserId;
-        newReview.OnProductId = ProductId;
+        _newReview.MadeByUserId = _loggedInUserId;
+        _newReview.OnProductId = ProductId;
+        _newReview.Rating = _tempRating;
 
-        var result = await ReviewService.CreateReview(newReview);
-        if (result.Success)
+        CheckUserOrderHistory();
+
+        if (UserPurchasedProduct)
         {
-            System.Console.WriteLine(result.Message);
-            NavigationManager.NavigateTo("");
-            NavigationManager.NavigateTo($"product/{ProductId}");
+            var result = await ReviewService.CreateReview(_newReview);
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+                NavigationManager.NavigateTo("");
+                NavigationManager.NavigateTo($"product/{ProductId}");
+                NotificationService.Notify(new NotificationMessage
+                    {
+                        Detail = "Thanks for leaving a review!",
+                        Severity = NotificationSeverity.Success,
+                        Duration = 4000
+                    });
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+                NavigationManager.NavigateTo("");
+                NavigationManager.NavigateTo($"product/{ProductId}");
+            }
         }
         else
         {
-            System.Console.WriteLine(result.Message);
-            NavigationManager.NavigateTo("");
-            NavigationManager.NavigateTo($"product/{ProductId}");
-            // todo use snackbar to add notification
+            NotificationService.Notify(new NotificationMessage
+                {
+                    Detail = "You need to purchase the product before leaving a review.",
+                    Severity = NotificationSeverity.Error,
+                    Duration = 4000
+                });
+            Console.WriteLine("You need to purchase the product before leaving a review.");
         }
     }
 
@@ -134,11 +164,25 @@ else
         return "Unknown";
     }
 
-    private async Task AddLike(int reviewId, int reviewMadeByUserId)
+    private void CheckUserOrderHistory()
     {
-        await LikesService.AddLike(reviewId, reviewMadeByUserId, _loggedInUserId);
-        _likeCount = await LikesService.GetLikeCountForAReview(reviewId);
-        StateHasChanged();
-        // TODO add like count to review table?
+        foreach (var order in _orders.Where(order => order.Product == Product.Title))
+        {
+            UserPurchasedProduct = true;
+        }
     }
-}
+
+    private async Task<Product> GetProduct()
+    {
+        var result = await ProductService.GetProduct(ProductId);
+        return result.Data;
+    }
+
+    //private async Task AddLike(int reviewId, int reviewMadeByUserId)
+    //{
+    //    await LikesService.AddLike(reviewId, reviewMadeByUserId, _loggedInUserId);
+    //    _likeCount = await LikesService.GetLikeCountForAReview(reviewId);
+    //    StateHasChanged();
+    //     TODO add like count to review table?
+    //}
+    }

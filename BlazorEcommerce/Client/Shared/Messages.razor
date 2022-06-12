@@ -15,8 +15,8 @@
 else if (ContactId != 0 && UserAcceptsMessages != false)
 {
     <h3 id="email-header">You are messaging <strong>@ContactEmail</strong>.</h3>
-    
-    <div id="chat-container" @ref="_chatElementReference">
+
+    <div id="chat-container">
         <ul class="chat">
             @foreach (var message in _messages)
             {
@@ -34,7 +34,7 @@ else if (ContactId != 0 && UserAcceptsMessages != false)
     <div>
         <label>
             Message:
-            <input class="form-control" @bind="CurrentMessage"/>
+            <input class="form-control" @bind="CurrentMessage" />
         </label>
     </div>
     <button class="btn-primary" @onclick="SendAsync">Send</button>

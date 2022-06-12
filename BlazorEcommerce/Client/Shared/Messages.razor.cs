@@ -17,7 +17,6 @@ namespace BlazorEcommerce.Client.Shared
         public string CurrentMessage { get; set; }
         public string CurrentUserEmail { get; set; }
         public int CurrentUserId { get; set; }
-        ElementReference _chatElementReference;
 
         protected override async Task OnInitializedAsync()
         {
@@ -41,7 +40,7 @@ namespace BlazorEcommerce.Client.Shared
                     if ((ContactId == message.ToUserId && CurrentUserId == message.FromUserId))
                     {
                         _messages.Add(new ChatMessage { Message = message.Message, CreatedDate = message.CreatedDate, FromUser = new User() { Email = CurrentUserEmail } });
-                        await HubConnection.SendAsync("ChatNotificationAsync", $"New Message From {userName}", ContactId, CurrentUserId);
+                        //await HubConnection.SendAsync("ChatNotificationAsync", $"New Message From {userName}", ContactId, CurrentUserId, CurrentUserEmail);
                     }
                     else if (ContactId == message.FromUserId && CurrentUserId == message.ToUserId)
                     {

@@ -25,11 +25,15 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
 @using MudBlazor
+@using Radzen
+@using Radzen.Blazor
 @inject AuthenticationStateProvider StateProvider
 @inject IChatService ChatService
 @inject IUserService UserService
+@inject IOrderService OrderService
+@inject IProductService ProductService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime _jsRuntime
 @inject ILikesService LikesService
 @inject IReviewService ReviewService
-@inject ISnackbar _snackBar
+@inject NotificationService NotificationService

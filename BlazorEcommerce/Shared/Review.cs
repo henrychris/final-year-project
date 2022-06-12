@@ -16,6 +16,8 @@ namespace Shared
         public int OnProductId { get; set; }
         [Required]
         public string ReviewText { get; set; }
+        [Required]
+        public int Rating { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public bool Visible { get; set; } = true;
         public bool Deleted { get; set; } = false;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorEcommerce.Client.Services.OrderService
 {
@@ -29,17 +30,20 @@ namespace BlazorEcommerce.Client.Services.OrderService
             return result.Data;
         }
 
-        public async Task<string> PlaceOrder()
+        public async Task PlaceOrder()
         {
             if (await IsUserAuthenticated())
             {
-                var result = await _http.PostAsync("api/payment/checkout", null);
-                var url = await result.Content.ReadAsStringAsync();
-                return url;
+                var state = await _authStateProvider.GetAuthenticationStateAsync();
+                var user = state.User;
+                var userId = Convert.ToInt32(state.User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value)
+                    .FirstOrDefault());
+
+                var result = await _http.PostAsync($"api/order/place-order/{userId}", null);
             }
             else
             {
-                return "login";
+                _navigationManager.NavigateTo("login");
             }
         }
         private async Task<bool> IsUserAuthenticated()
