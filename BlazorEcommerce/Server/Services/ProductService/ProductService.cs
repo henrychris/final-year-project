@@ -68,6 +68,13 @@
             return response;
         }
 
+        public async Task<List<Product>> GetAllProductsAsync()
+        {
+            var response = new ServiceResponse<List<Product>>();
+            // to be continued
+            return await _context.Products.Where(s => s.Visible).ToListAsync();
+        }
+
         public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
         {
             var response = new ServiceResponse<Product>();

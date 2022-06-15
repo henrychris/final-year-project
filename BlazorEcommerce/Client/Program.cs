@@ -11,6 +11,7 @@ global using BlazorEcommerce.Client.Services.ProductTypeService;
 using BlazorEcommerce.Client;
 using BlazorEcommerce.Client.Services.ChatService;
 using BlazorEcommerce.Client.Services.LikesService;
+using BlazorEcommerce.Client.Services.PredictService;
 using BlazorEcommerce.Client.Services.ReviewService;
 using BlazorEcommerce.Client.Services.UserService;
 using Microsoft.AspNetCore.Components.Web;
@@ -37,7 +38,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
-
+builder.Services.AddScoped<IPredictService, PredictService>();
 builder.Services.AddScoped<Radzen.DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();

@@ -1,4 +1,5 @@
 ﻿@using global::Shared
+@using System.Runtime.CompilerServices
 @inject IUserService UserService
 @inject IReviewService ReviewService
 
@@ -81,8 +82,8 @@ else
     public int ProductId { get; set; }
     private List<Review> _reviews;
     private List<User> _users;
-    List<OrderOverviewResponse> _orders = null;
-    private int _loggedInUserId;
+    private List<OrderOverviewResponse> _orders = null;
+    private int _loggedInUserId { get; set; }
     public bool UserPurchasedProduct = false;
     private Product Product { get; set; }
     //private int _likeCount;
@@ -119,7 +120,7 @@ else
         _newReview.OnProductId = ProductId;
         _newReview.Rating = _tempRating;
 
-        CheckUserOrderHistory();
+        await CheckUserOrderHistory();
 
         if (UserPurchasedProduct)
         {
@@ -164,11 +165,30 @@ else
         return "Unknown";
     }
 
-    private void CheckUserOrderHistory()
+    private async Task CheckUserOrderHistory()
     {
-        foreach (var order in _orders.Where(order => order.Product == Product.Title))
+        var ordersList = new List<OrderDetailsResponse>();
+
+        var orderIdList = _orders.Select(_order => _order.Id).ToList();
+
+        foreach (var id in orderIdList)
         {
-            UserPurchasedProduct = true;
+            var temp = await OrderService.GetOrderDetails(id);
+            if (temp != null)
+            {
+                ordersList.Add(temp);
+            }
+        }
+
+        foreach (var order in ordersList)
+        {
+            foreach (var product in order.Products)
+            {
+                if (product.Title == Product.Title)
+                {
+                    UserPurchasedProduct = true;
+                }
+            }
         }
     }
 

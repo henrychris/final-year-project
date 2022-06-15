@@ -48,6 +48,13 @@
             return result;
         }
 
+        public async Task GetAllProducts()
+        {
+            var result = await _http.GetFromJsonAsync<List<Product>>($"api/product/all");
+            Products = result;
+
+        }
+
         public async Task GetProducts(string? categoryUrl = null)
         {
             var result = categoryUrl == null ?

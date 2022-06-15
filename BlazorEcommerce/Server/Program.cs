@@ -9,12 +9,14 @@ global using BlazorEcommerce.Server.Services.OrderService;
 global using BlazorEcommerce.Server.Services.PaymentService;
 global using BlazorEcommerce.Server.Services.AddressService;
 global using BlazorEcommerce.Server.Services.ProductTypeService;
+using BlazorEcommerce.Server.DataModels;
 using BlazorEcommerce.Server.Services.ReviewService;
 using BlazorEcommerce.Server.Services.UserService;
 using BlazorEcommerce.Server.Hubs;
 using BlazorEcommerce.Server.Services.LikesService;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.ML;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +44,10 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ILikesService, LikesService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
+
+builder.Services.AddPredictionEnginePool<ProductDataModel, ProductDataPrediction>()
+    .FromFile(modelName: "ProductPredictionModel", filePath: "MLModels/ProductRecommenderModel.zip", watchForChanges: true);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
