@@ -51,7 +51,7 @@ builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 // todo upload model to somewhere sha
 builder.Services.AddPredictionEnginePool<ProductDataModel, ProductDataPrediction>()
 //.FromUri(modelName: "", uri: "");
-.FromFile(modelName: "ProductPredictionModel", filePath: "wwroot/MLModels/ProductRecommenderModel.zip", watchForChanges: true);
+.FromFile(modelName: "ProductPredictionModel", filePath: "wwwroot/MLModels/ProductRecommenderModel.zip", watchForChanges: true);
 // C:\Users\hidde\My Stuff\School\Final Year Project\final-year-project\BlazorEcommerce\Server\MLModels\ProductRecommenderModel.zip
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
