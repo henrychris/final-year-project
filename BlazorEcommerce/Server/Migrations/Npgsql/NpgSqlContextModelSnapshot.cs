@@ -3,65 +3,56 @@ using System;
 using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BlazorEcommerce.Server.Migrations
+namespace BlazorEcommerce.Server.Migrations.NpgSql
 {
-    [DbContext(typeof(DataContext))]
-    [Migration("20220523215214_updateUserModel")]
-    partial class updateUserModel
+    [DbContext(typeof(NpgSqlContext))]
+    partial class NpgSqlContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Zip")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -74,16 +65,16 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.CartItem", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "ProductId", "ProductTypeId");
 
@@ -94,23 +85,21 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -140,6 +129,22 @@ namespace BlazorEcommerce.Server.Migrations
                             Name = "Video Games",
                             Url = "video-games",
                             Visible = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Deleted = false,
+                            Name = "Sports",
+                            Url = "sports",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Deleted = false,
+                            Name = "Clothing",
+                            Url = "clothing",
+                            Visible = true
                         });
                 });
 
@@ -147,18 +152,18 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -168,19 +173,19 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.OrderItem", b =>
                 {
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("OrderId", "ProductId", "ProductTypeId");
 
@@ -195,33 +200,31 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Featured")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -350,6 +353,72 @@ namespace BlazorEcommerce.Server.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
                             Title = "Super Nintendo Entertainment System",
                             Visible = true
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Nike Hypervenom is a football boot manufactured by Nike. This type of boot is said to be for traction, power, and agility, designed for deceptive players. Therefore, it is endorsed/worn by players, notably forwards, such as Robert Lewandowski, Harry Kane, Edinson Cavani, Gonzalo Higuaín, Mauro Icardi and Thiago. In 2017, 18-year-old prodigy Kylian Mbappé was given his own personalised boots, the Nike Hypervenom 3.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/HypervenomX_Finale_Turf.jpg/250px-HypervenomX_Finale_Turf.jpg",
+                            Title = "Nike Hypervenom",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Adidas Telstar 18 was the official match ball of the 2018 FIFA World Cup, which was held in the Russian Federation. It was designed by the company Adidas, a FIFA Partner and FIFA World Cup official match ball supplier since 1970, and based on the concept of the first Adidas's World Cup match ball.",
+                            Featured = false,
+                            ImageUrl = "https://images.unsplash.com/photo-1511886929837-354d827aae26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
+                            Title = "Adidas Telstar 18",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "Pure and simply Liverpudlian red. Show that your support means more than any other club with this Liverpool home Stadium shirt.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/06/9.jpg",
+                            Title = "Liverpool FC 21/22 Home Kit",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Run with it. Step into these adidas U_Path Run Shoes and take your style game to the finish line. With a sleek feel and futuristic look, the mesh upper has a bungee heel overlay that delivers stretchy support. Move in comfort all day with the EVA midsole.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/28-1.jpg",
+                            Title = "Adidas U_Path Run Shoes – Black",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "The Nike Winflo 8 brings back the cushioning you love and pairs it with details like a translucent upper and Flywire technology. The result is better stability for long runs.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/05/38-1.jpg",
+                            Title = "Nike Winflo 8 Running Sneaker",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Strap up in these adidas running shoes and you’re set for a jog in the park followed by coffee with friends. With a mesh upper for outstanding breathability, they’re meant to deliver comfort all day long. A durable rubber outsole gives you a solid foundation no matter how busy your schedule.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_800,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/20.webp",
+                            Title = "Adidas Run Falcon 2.0 Shoes",
+                            Visible = true
                         });
                 });
 
@@ -357,13 +426,12 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -425,22 +493,22 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.ProductVariant", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("ProductId", "ProductTypeId");
 
@@ -449,6 +517,60 @@ namespace BlazorEcommerce.Server.Migrations
                     b.ToTable("ProductVariants");
 
                     b.HasData(
+                        new
+                        {
+                            ProductId = 17,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 229.99m,
+                            Price = 229.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 59.99m,
+                            Price = 59.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 29.99m,
+                            Price = 29.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 132.99m,
+                            Price = 132.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 109.99m,
+                            Price = 109.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 90.00m,
+                            Price = 90.00m,
+                            Visible = true
+                        },
                         new
                         {
                             ProductId = 1,
@@ -604,62 +726,111 @@ namespace BlazorEcommerce.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.Property<int>("LikedByUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LikedReviewId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LikedByUserId", "LikedReviewId");
+
+                    b.HasIndex("LikedReviewId");
+
+                    b.ToTable("ReviewLikes");
+                });
+
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AcceptsMessages")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Books")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Clothing")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Default")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Movies")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Sports")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("VideoGames")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserInterests");
+                });
+
             modelBuilder.Entity("Shared.ChatMessage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("FromUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ToUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -674,28 +845,31 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("MadeByUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("OnProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReviewText")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -772,6 +946,36 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "LikedByUser")
+                        .WithMany("UserReviewLikes")
+                        .HasForeignKey("LikedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shared.Review", "LikedReview")
+                        .WithMany("LikedByUsers")
+                        .HasForeignKey("LikedReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LikedByUser");
+
+                    b.Navigation("LikedReview");
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "User")
+                        .WithOne("UserInterests")
+                        .HasForeignKey("BlazorEcommerce.Shared.UserInterest", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Shared.ChatMessage", b =>
                 {
                     b.HasOne("BlazorEcommerce.Shared.User", "FromUser")
@@ -820,14 +1024,22 @@ namespace BlazorEcommerce.Server.Migrations
 
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
                 {
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
 
                     b.Navigation("ChatMessagesFromUsers");
 
                     b.Navigation("ChatMessagesToUsers");
 
+                    b.Navigation("UserInterests");
+
+                    b.Navigation("UserReviewLikes");
+
                     b.Navigation("UserReviews");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.Navigation("LikedByUsers");
                 });
 #pragma warning restore 612, 618
         }

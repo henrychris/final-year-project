@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlazorEcommerce.Server.Migrations
+namespace BlazorEcommerce.Server.Migrations.Sql
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211205212215_CategoryFlags")]
-    partial class CategoryFlags
+    [Migration("20220619173419_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,34 +33,27 @@ namespace BlazorEcommerce.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Zip")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -102,11 +95,9 @@ namespace BlazorEcommerce.Server.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Visible")
@@ -139,6 +130,22 @@ namespace BlazorEcommerce.Server.Migrations
                             Deleted = false,
                             Name = "Video Games",
                             Url = "video-games",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Deleted = false,
+                            Name = "Sports",
+                            Url = "sports",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Deleted = false,
+                            Name = "Clothing",
+                            Url = "clothing",
                             Visible = true
                         });
                 });
@@ -202,20 +209,24 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Featured")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -228,100 +239,188 @@ namespace BlazorEcommerce.Server.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            Deleted = false,
                             Description = "The Hitchhiker's Guide to the Galaxy[note 1] (sometimes referred to as HG2G,[1] HHGTTG,[2] H2G2,[3] or tHGttG) is a comedy science fiction franchise created by Douglas Adams. Originally a 1978 radio comedy broadcast on BBC Radio 4, it was later adapted to other formats, including stage shows, novels, comic books, a 1981 TV series, a 1984 text-based computer game, and 2005 feature film.",
                             Featured = true,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
-                            Title = "The Hitchhiker's Guide to the Galaxy"
+                            Title = "The Hitchhiker's Guide to the Galaxy",
+                            Visible = true
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
+                            Deleted = false,
                             Description = "Ready Player One is a 2011 science fiction novel, and the debut novel of American author Ernest Cline. The story, set in a dystopia in 2045, follows protagonist Wade Watts on his search for an Easter egg in a worldwide virtual reality game, the discovery of which would lead him to inherit the game creator's fortune. Cline sold the rights to publish the novel in June 2010, in a bidding war to the Crown Publishing Group (a division of Random House).[1] The book was published on August 16, 2011.[2] An audiobook was released the same day; it was narrated by Wil Wheaton, who was mentioned briefly in one of the chapters.[3][4]Ch. 20 In 2012, the book received an Alex Award from the Young Adult Library Services Association division of the American Library Association[5] and won the 2011 Prometheus Award.[6]",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_One_cover.jpg",
-                            Title = "Ready Player One"
+                            Title = "Ready Player One",
+                            Visible = true
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 1,
+                            Deleted = false,
                             Description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the totalitarian government in the novel after Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within politics and the ways in which they are manipulated.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c3/1984first.jpg",
-                            Title = "Nineteen Eighty-Four"
+                            Title = "Nineteen Eighty-Four",
+                            Visible = true
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 2,
+                            Deleted = false,
                             Description = "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. Starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano, and as the first installment in the Matrix franchise, it depicts a dystopian future in which humanity is unknowingly trapped inside a simulated reality, the Matrix, which intelligent machines have created to distract humans while using their bodies as an energy source. When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he \"is drawn into a rebellion against the machines\" along with other people who have been freed from the Matrix.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-                            Title = "The Matrix"
+                            Title = "The Matrix",
+                            Visible = true
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 2,
+                            Deleted = false,
                             Description = "Back to the Future is a 1985 American science fiction film directed by Robert Zemeckis. Written by Zemeckis and Bob Gale, it stars Michael J. Fox, Christopher Lloyd, Lea Thompson, Crispin Glover, and Thomas F. Wilson. Set in 1985, the story follows Marty McFly (Fox), a teenager accidentally sent back to 1955 in a time-traveling DeLorean automobile built by his eccentric scientist friend Doctor Emmett \"Doc\" Brown (Lloyd). Trapped in the past, Marty inadvertently prevents his future parents' meeting—threatening his very existence—and is forced to reconcile the pair and somehow get back to the future.",
                             Featured = true,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d2/Back_to_the_Future.jpg",
-                            Title = "Back to the Future"
+                            Title = "Back to the Future",
+                            Visible = true
                         },
                         new
                         {
                             Id = 6,
                             CategoryId = 2,
+                            Deleted = false,
                             Description = "Toy Story is a 1995 American computer-animated comedy film produced by Pixar Animation Studios and released by Walt Disney Pictures. The first installment in the Toy Story franchise, it was the first entirely computer-animated feature film, as well as the first feature film from Pixar. The film was directed by John Lasseter (in his feature directorial debut), and written by Joss Whedon, Andrew Stanton, Joel Cohen, and Alec Sokolow from a story by Lasseter, Stanton, Pete Docter, and Joe Ranft. The film features music by Randy Newman, was produced by Bonnie Arnold and Ralph Guggenheim, and was executive-produced by Steve Jobs and Edwin Catmull. The film features the voices of Tom Hanks, Tim Allen, Don Rickles, Wallace Shawn, John Ratzenberger, Jim Varney, Annie Potts, R. Lee Ermey, John Morris, Laurie Metcalf, and Erik von Detten. Taking place in a world where anthropomorphic toys come to life when humans are not present, the plot focuses on the relationship between an old-fashioned pull-string cowboy doll named Woody and an astronaut action figure, Buzz Lightyear, as they evolve from rivals competing for the affections of their owner, Andy Davis, to friends who work together to be reunited with Andy after being separated from him.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
-                            Title = "Toy Story"
+                            Title = "Toy Story",
+                            Visible = true
                         },
                         new
                         {
                             Id = 7,
                             CategoryId = 3,
+                            Deleted = false,
                             Description = "Half-Life 2 is a 2004 first-person shooter game developed and published by Valve. Like the original Half-Life, it combines shooting, puzzles, and storytelling, and adds features such as vehicles and physics-based gameplay.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-                            Title = "Half-Life 2"
+                            Title = "Half-Life 2",
+                            Visible = true
                         },
                         new
                         {
                             Id = 8,
                             CategoryId = 3,
+                            Deleted = false,
                             Description = "Diablo II is an action role-playing hack-and-slash computer video game developed by Blizzard North and published by Blizzard Entertainment in 2000 for Microsoft Windows, Classic Mac OS, and macOS.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d5/Diablo_II_Coverart.png",
-                            Title = "Diablo II"
+                            Title = "Diablo II",
+                            Visible = true
                         },
                         new
                         {
                             Id = 9,
                             CategoryId = 3,
+                            Deleted = false,
                             Description = "Day of the Tentacle, also known as Maniac Mansion II: Day of the Tentacle, is a 1993 graphic adventure game developed and published by LucasArts. It is the sequel to the 1987 game Maniac Mansion.",
                             Featured = true,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/79/Day_of_the_Tentacle_artwork.jpg",
-                            Title = "Day of the Tentacle"
+                            Title = "Day of the Tentacle",
+                            Visible = true
                         },
                         new
                         {
                             Id = 10,
                             CategoryId = 3,
+                            Deleted = false,
                             Description = "The Xbox is a home video game console and the first installment in the Xbox series of video game consoles manufactured by Microsoft.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox-console.jpg",
-                            Title = "Xbox"
+                            Title = "Xbox",
+                            Visible = true
                         },
                         new
                         {
                             Id = 11,
                             CategoryId = 3,
+                            Deleted = false,
                             Description = "The Super Nintendo Entertainment System (SNES), also known as the Super NES or Super Nintendo, is a 16-bit home video game console developed by Nintendo that was released in 1990 in Japan and South Korea.",
                             Featured = false,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
-                            Title = "Super Nintendo Entertainment System"
+                            Title = "Super Nintendo Entertainment System",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Nike Hypervenom is a football boot manufactured by Nike. This type of boot is said to be for traction, power, and agility, designed for deceptive players. Therefore, it is endorsed/worn by players, notably forwards, such as Robert Lewandowski, Harry Kane, Edinson Cavani, Gonzalo Higuaín, Mauro Icardi and Thiago. In 2017, 18-year-old prodigy Kylian Mbappé was given his own personalised boots, the Nike Hypervenom 3.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/HypervenomX_Finale_Turf.jpg/250px-HypervenomX_Finale_Turf.jpg",
+                            Title = "Nike Hypervenom",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Adidas Telstar 18 was the official match ball of the 2018 FIFA World Cup, which was held in the Russian Federation. It was designed by the company Adidas, a FIFA Partner and FIFA World Cup official match ball supplier since 1970, and based on the concept of the first Adidas's World Cup match ball.",
+                            Featured = false,
+                            ImageUrl = "https://images.unsplash.com/photo-1511886929837-354d827aae26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
+                            Title = "Adidas Telstar 18",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "Pure and simply Liverpudlian red. Show that your support means more than any other club with this Liverpool home Stadium shirt.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/06/9.jpg",
+                            Title = "Liverpool FC 21/22 Home Kit",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Run with it. Step into these adidas U_Path Run Shoes and take your style game to the finish line. With a sleek feel and futuristic look, the mesh upper has a bungee heel overlay that delivers stretchy support. Move in comfort all day with the EVA midsole.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/28-1.jpg",
+                            Title = "Adidas U_Path Run Shoes – Black",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "The Nike Winflo 8 brings back the cushioning you love and pairs it with details like a translucent upper and Flywire technology. The result is better stability for long runs.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/05/38-1.jpg",
+                            Title = "Nike Winflo 8 Running Sneaker",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Strap up in these adidas running shoes and you’re set for a jog in the park followed by coffee with friends. With a mesh upper for outstanding breathability, they’re meant to deliver comfort all day long. A durable rubber outsole gives you a solid foundation no matter how busy your schedule.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_800,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/20.webp",
+                            Title = "Adidas Run Falcon 2.0 Shoes",
+                            Visible = true
                         });
                 });
 
@@ -334,7 +433,6 @@ namespace BlazorEcommerce.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -402,11 +500,17 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
 
                     b.HasKey("ProductId", "ProductTypeId");
 
@@ -417,123 +521,226 @@ namespace BlazorEcommerce.Server.Migrations
                     b.HasData(
                         new
                         {
+                            ProductId = 17,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 229.99m,
+                            Price = 229.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 59.99m,
+                            Price = 59.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 29.99m,
+                            Price = 29.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 132.99m,
+                            Price = 132.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 109.99m,
+                            Price = 109.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 90.00m,
+                            Price = 90.00m,
+                            Visible = true
+                        },
+                        new
+                        {
                             ProductId = 1,
                             ProductTypeId = 2,
+                            Deleted = false,
                             OriginalPrice = 19.99m,
-                            Price = 9.99m
+                            Price = 9.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 1,
                             ProductTypeId = 3,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 7.99m
+                            Price = 7.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 1,
                             ProductTypeId = 4,
+                            Deleted = false,
                             OriginalPrice = 29.99m,
-                            Price = 19.99m
+                            Price = 19.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 2,
                             ProductTypeId = 2,
+                            Deleted = false,
                             OriginalPrice = 14.99m,
-                            Price = 7.99m
+                            Price = 7.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 3,
                             ProductTypeId = 2,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 6.99m
+                            Price = 6.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 4,
                             ProductTypeId = 5,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 3.99m
+                            Price = 3.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 4,
                             ProductTypeId = 6,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 9.99m
+                            Price = 9.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 4,
                             ProductTypeId = 7,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 19.99m
+                            Price = 19.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 5,
                             ProductTypeId = 5,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 3.99m
+                            Price = 3.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 6,
                             ProductTypeId = 5,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 2.99m
+                            Price = 2.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 7,
                             ProductTypeId = 8,
+                            Deleted = false,
                             OriginalPrice = 29.99m,
-                            Price = 19.99m
+                            Price = 19.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 7,
                             ProductTypeId = 9,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 69.99m
+                            Price = 69.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 7,
                             ProductTypeId = 10,
+                            Deleted = false,
                             OriginalPrice = 59.99m,
-                            Price = 49.99m
+                            Price = 49.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 8,
                             ProductTypeId = 8,
+                            Deleted = false,
                             OriginalPrice = 24.99m,
-                            Price = 9.99m
+                            Price = 9.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 9,
                             ProductTypeId = 8,
+                            Deleted = false,
                             OriginalPrice = 0m,
-                            Price = 14.99m
+                            Price = 14.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 10,
                             ProductTypeId = 1,
+                            Deleted = false,
                             OriginalPrice = 299m,
-                            Price = 159.99m
+                            Price = 159.99m,
+                            Visible = true
                         },
                         new
                         {
                             ProductId = 11,
                             ProductTypeId = 1,
+                            Deleted = false,
                             OriginalPrice = 399m,
-                            Price = 79.99m
+                            Price = 79.99m,
+                            Visible = true
                         });
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.Property<int>("LikedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikedReviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikedByUserId", "LikedReviewId");
+
+                    b.HasIndex("LikedReviewId");
+
+                    b.ToTable("ReviewLikes");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
@@ -544,28 +751,205 @@ namespace BlazorEcommerce.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("AcceptsMessages")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AcceptsMessages = false,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 19, 509, DateTimeKind.Local).AddTicks(3545),
+                            Email = "jennychris2002@yahoo.co.uk",
+                            Name = "Jenny",
+                            PasswordHash = new byte[] { 48, 120, 66, 68, 48, 55, 66, 70, 68, 56, 50, 70, 48, 69, 56, 67, 50, 53, 54, 70, 68, 65, 52, 66, 54, 51, 67, 68, 69, 70, 66, 55, 52, 55, 65, 68, 48, 51, 70, 54, 55, 53, 48, 69, 56, 57, 68, 70, 48, 53, 51, 68, 55, 48, 52, 70, 67, 69, 57, 67, 48, 68, 48, 50, 50, 55, 51, 48, 54, 51, 57, 57, 55, 52, 67, 69, 66, 66, 66, 67, 69, 70, 65, 48, 50, 54, 51, 55, 56, 48, 55, 50, 52, 56, 52, 67, 66, 57, 65, 48, 69, 66, 52, 49, 67, 65, 68, 49, 53, 69, 56, 69, 54, 67, 65, 56, 49, 54, 48, 69, 57, 53, 68, 57, 53, 69, 52, 69, 54, 68 },
+                            PasswordSalt = new byte[] { 48, 120, 49, 48, 53, 52, 48, 56, 57, 69, 54, 68, 65, 55, 50, 70, 67, 53, 68, 49, 67, 49, 52, 66, 70, 57, 49, 52, 70, 48, 65, 68, 56, 51, 50, 66, 57, 65, 52, 69, 53, 52, 65, 66, 48, 48, 56, 55, 49, 50, 56, 50, 55, 57, 66, 53, 57, 66, 53, 69, 48, 67, 54, 67, 48, 50, 54, 55, 69, 66, 48, 55, 56, 70, 65, 66, 67, 70, 66, 49, 49, 49, 54, 57, 53, 56, 70, 53, 53, 55, 56, 57, 68, 50, 50, 69, 54, 56, 70, 70, 65, 57, 50, 53, 69, 67, 55, 57, 48, 53, 65, 54, 57, 49, 50, 53, 65, 69, 55, 69, 54, 69, 57, 51, 69, 65, 67, 55, 50, 54, 50, 70, 55, 53, 53, 51, 51, 51, 53, 52, 50, 51, 54, 68, 53, 54, 70, 66, 68, 55, 53, 48, 51, 50, 70, 70, 49, 68, 49, 53, 50, 50, 69, 66, 56, 49, 50, 66, 65, 49, 54, 65, 54, 66, 54, 67, 70, 55, 53, 51, 48, 51, 48, 57, 67, 48, 66, 49, 67, 53, 51, 49, 50, 53, 55, 70, 48, 48, 57, 54, 48, 51, 54, 57, 67, 66, 49, 66, 48, 56, 54, 55, 51, 57, 70, 50, 53, 52, 69, 49, 56, 48, 54, 50, 65, 53, 54, 68, 49, 53, 57, 65, 52, 57, 52, 67, 49, 67, 51, 51, 54, 52, 55, 70, 54, 69, 65, 52, 49, 53, 54, 56, 56, 52, 67, 54, 65, 67 },
+                            Role = "Customer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AcceptsMessages = true,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 19, 509, DateTimeKind.Local).AddTicks(3578),
+                            Email = "chukwuemeka.ihenacho@stu.cu.edu.ng",
+                            Name = "Chukwuemeka",
+                            PasswordHash = new byte[] { 48, 120, 69, 57, 67, 49, 65, 48, 52, 69, 68, 49, 65, 50, 50, 67, 54, 48, 66, 50, 52, 65, 56, 66, 55, 57, 68, 55, 52, 68, 49, 50, 55, 70, 65, 52, 67, 51, 49, 70, 69, 67, 55, 50, 70, 66, 54, 49, 67, 55, 51, 53, 51, 66, 68, 48, 49, 65, 57, 51, 50, 51, 56, 68, 48, 69, 50, 56, 65, 68, 57, 56, 65, 52, 56, 56, 50, 55, 54, 66, 55, 69, 50, 51, 67, 56, 66, 68, 65, 51, 54, 70, 51, 55, 50, 70, 55, 67, 56, 55, 52, 54, 54, 53, 50, 48, 52, 66, 49, 66, 65, 48, 70, 55, 51, 55, 55, 54, 49, 68, 48, 50, 70, 68, 57, 70, 57, 57, 54, 70 },
+                            PasswordSalt = new byte[] { 48, 120, 69, 70, 51, 70, 52, 49, 65, 55, 69, 56, 53, 51, 54, 69, 52, 67, 53, 49, 50, 57, 54, 51, 55, 57, 49, 57, 49, 68, 50, 65, 53, 49, 51, 51, 52, 53, 56, 52, 70, 49, 70, 48, 65, 49, 66, 57, 49, 49, 50, 49, 56, 51, 52, 49, 49, 49, 70, 51, 68, 54, 65, 70, 66, 54, 55, 50, 65, 55, 67, 56, 56, 68, 66, 54, 68, 65, 54, 68, 48, 66, 70, 53, 51, 53, 70, 67, 57, 70, 66, 68, 57, 66, 57, 67, 66, 56, 57, 48, 50, 48, 57, 70, 49, 67, 54, 66, 53, 52, 50, 54, 68, 55, 52, 54, 49, 70, 65, 69, 69, 67, 48, 53, 54, 52, 70, 53, 68, 56, 55, 70, 67, 48, 51, 49, 57, 55, 70, 51, 50, 55, 48, 65, 66, 53, 55, 70, 54, 56, 52, 50, 55, 53, 56, 53, 53, 65, 48, 65, 67, 48, 52, 53, 51, 49, 68, 70, 52, 49, 55, 52, 67, 68, 69, 67, 54, 56, 66, 57, 66, 67, 68, 48, 55, 68, 48, 57, 69, 69, 54, 54, 65, 51, 67, 67, 56, 48, 49, 70, 55, 52, 48, 55, 67, 56, 48, 53, 49, 54, 49, 68, 50, 69, 51, 55, 50, 50, 48, 65, 55, 53, 50, 70, 65, 66, 51, 52, 51, 56, 53, 50, 52, 51, 66, 48, 53, 69, 65, 52, 56, 48, 56, 49, 48, 67, 65, 55, 48, 49, 54, 51, 70, 54, 50, 70, 52, 56 },
+                            Role = "Customer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AcceptsMessages = true,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 19, 509, DateTimeKind.Local).AddTicks(3583),
+                            Email = "admin@gmail.com",
+                            Name = "Admin",
+                            PasswordHash = new byte[] { 48, 120, 57, 52, 52, 48, 54, 55, 51, 50, 66, 70, 56, 49, 50, 51, 66, 52, 49, 56, 48, 67, 65, 69, 52, 67, 54, 69, 68, 49, 65, 68, 50, 56, 55, 56, 57, 53, 67, 55, 70, 57, 70, 53, 57, 66, 54, 50, 49, 54, 56, 48, 68, 57, 67, 51, 50, 52, 56, 70, 52, 52, 50, 66, 66, 51, 52, 65, 48, 66, 65, 56, 52, 53, 67, 53, 65, 50, 57, 48, 53, 51, 66, 54, 53, 57, 70, 65, 50, 67, 50, 70, 51, 67, 65, 69, 66, 53, 49, 57, 65, 55, 70, 51, 69, 54, 68, 56, 67, 70, 49, 67, 66, 69, 49, 52, 49, 65, 49, 50, 70, 53, 66, 56, 65, 51, 55, 56, 66, 53 },
+                            PasswordSalt = new byte[] { 48, 120, 67, 48, 51, 57, 69, 48, 67, 53, 57, 55, 67, 50, 54, 55, 52, 67, 57, 53, 56, 51, 52, 67, 69, 49, 49, 53, 69, 49, 57, 49, 66, 56, 49, 67, 65, 69, 69, 57, 67, 70, 67, 51, 53, 52, 57, 68, 50, 53, 65, 56, 50, 55, 67, 65, 56, 52, 54, 54, 53, 49, 51, 56, 53, 70, 54, 49, 53, 52, 65, 54, 50, 65, 49, 55, 66, 52, 51, 56, 67, 51, 65, 53, 67, 69, 49, 50, 70, 51, 53, 50, 67, 52, 56, 57, 50, 50, 57, 54, 65, 68, 66, 48, 67, 51, 48, 53, 52, 50, 48, 54, 70, 67, 51, 65, 48, 69, 67, 69, 53, 51, 66, 68, 70, 52, 69, 55, 56, 49, 65, 49, 52, 48, 52, 55, 65, 70, 51, 56, 54, 70, 68, 66, 57, 53, 56, 56, 66, 70, 65, 66, 56, 55, 65, 69, 53, 56, 53, 65, 70, 50, 49, 67, 65, 70, 57, 51, 50, 57, 51, 50, 49, 49, 57, 53, 68, 55, 53, 54, 52, 52, 68, 49, 57, 54, 67, 54, 70, 67, 49, 65, 51, 52, 56, 67, 68, 48, 65, 50, 70, 67, 54, 48, 51, 55, 51, 50, 70, 52, 65, 69, 53, 65, 65, 57, 49, 55, 57, 52, 54, 53, 53, 52, 50, 68, 55, 49, 68, 55, 53, 57, 69, 52, 56, 48, 67, 54, 55, 55, 53, 51, 55, 67, 69, 54, 55, 67, 67, 67, 54, 48, 52, 67, 51, 70, 53, 68 },
+                            Role = "Customer"
+                        });
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Books")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Clothing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Default")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Movies")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Sports")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("VideoGames")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserInterests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Books = true,
+                            Clothing = false,
+                            Default = false,
+                            Movies = true,
+                            Sports = false,
+                            UserId = 1,
+                            VideoGames = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Books = false,
+                            Clothing = false,
+                            Default = false,
+                            Movies = true,
+                            Sports = true,
+                            UserId = 2,
+                            VideoGames = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Books = true,
+                            Clothing = true,
+                            Default = false,
+                            Movies = false,
+                            Sports = true,
+                            UserId = 3,
+                            VideoGames = false
+                        });
+                });
+
+            modelBuilder.Entity("Shared.ChatMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FromUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ToUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MadeByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MadeByUserId");
+
+                    b.HasIndex("OnProductId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Address", b =>
@@ -634,6 +1018,70 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "LikedByUser")
+                        .WithMany("UserReviewLikes")
+                        .HasForeignKey("LikedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shared.Review", "LikedReview")
+                        .WithMany("LikedByUsers")
+                        .HasForeignKey("LikedReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LikedByUser");
+
+                    b.Navigation("LikedReview");
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "User")
+                        .WithOne("UserInterests")
+                        .HasForeignKey("BlazorEcommerce.Shared.UserInterest", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Shared.ChatMessage", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "FromUser")
+                        .WithMany("ChatMessagesFromUsers")
+                        .HasForeignKey("FromUserId")
+                        .IsRequired();
+
+                    b.HasOne("BlazorEcommerce.Shared.User", "ToUser")
+                        .WithMany("ChatMessagesToUsers")
+                        .HasForeignKey("ToUserId")
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "MadeBy")
+                        .WithMany("UserReviews")
+                        .HasForeignKey("MadeByUserId")
+                        .IsRequired();
+
+                    b.HasOne("BlazorEcommerce.Shared.Product", "OnProduct")
+                        .WithMany("ReviewsOnProduct")
+                        .HasForeignKey("OnProductId")
+                        .IsRequired();
+
+                    b.Navigation("MadeBy");
+
+                    b.Navigation("OnProduct");
+                });
+
             modelBuilder.Entity("BlazorEcommerce.Shared.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -641,13 +1089,29 @@ namespace BlazorEcommerce.Server.Migrations
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Product", b =>
                 {
+                    b.Navigation("ReviewsOnProduct");
+
                     b.Navigation("Variants");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
                 {
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
+
+                    b.Navigation("ChatMessagesFromUsers");
+
+                    b.Navigation("ChatMessagesToUsers");
+
+                    b.Navigation("UserInterests");
+
+                    b.Navigation("UserReviewLikes");
+
+                    b.Navigation("UserReviews");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.Navigation("LikedByUsers");
                 });
 #pragma warning restore 612, 618
         }

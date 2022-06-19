@@ -21,22 +21,19 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<DataContext>(options =>
+if (builder.Environment.IsDevelopment())
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    }
-    else
-    {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    }
-});
+    // change this to datacontext
+    builder.Services.AddDbContext<DataContext>();
+}
+else
+{
+    builder.Services.AddDbContext<NpgSqlContext>();
+}
 
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

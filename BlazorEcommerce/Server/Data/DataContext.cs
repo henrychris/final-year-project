@@ -4,9 +4,16 @@ namespace BlazorEcommerce.Server.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        protected readonly IConfiguration _configuration;
+        public DataContext(IConfiguration configuration)
         {
+            _configuration = configuration;
+        }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // connect to sql server database
+            options.UseSqlServer(_configuration.GetConnectionString("SqlConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -413,13 +420,75 @@ namespace BlazorEcommerce.Server.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            //modelBuilder.Entity<Category>(entity =>
-            //{
-            //    entity.HasOne(k => k.User)
-            //        .WithMany(c => c.UserCategories)
-            //        .HasForeignKey(u => u.UserId)
-            //        .OnDelete(DeleteBehavior.Cascade);
-            //});
+            //modelBuilder.Entity<User>().HasData(
+            //    new User
+            //    {
+            //        Id = 1,
+            //        Name = "Jenny",
+            //        Email = "jennychris2002@yahoo.co.uk",
+            //        DateCreated = DateTime.Now,
+            //        PasswordHash = System.Text.Encoding.UTF8.GetBytes("0xBD07BFD82F0E8C256FDA4B63CDEFB747AD03F6750E89DF053D704FCE9C0D022730639974CEBBBCEFA026378072484CB9A0EB41CAD15E8E6CA8160E95D95E4E6D"),
+            //        PasswordSalt = System.Text.Encoding.UTF8.GetBytes("0x1054089E6DA72FC5D1C14BF914F0AD832B9A4E54AB0087128279B59B5E0C6C0267EB078FABCFB1116958F55789D22E68FFA925EC7905A69125AE7E6E93EAC7262F75533354236D56FBD75032FF1D1522EB812BA16A6B6CF7530309C0B1C531257F00960369CB1B086739F254E18062A56D159A494C1C33647F6EA4156884C6AC"),
+            //        AcceptsMessages = false,
+            //        Role = "Customer"
+            //    },
+            //    new User
+            //    {
+            //        Id = 2,
+            //        Name = "Chukwuemeka",
+            //        Email = "chukwuemeka.ihenacho@stu.cu.edu.ng",
+            //        DateCreated = DateTime.Now,
+            //        PasswordHash = System.Text.Encoding.UTF8.GetBytes("0xE9C1A04ED1A22C60B24A8B79D74D127FA4C31FEC72FB61C7353BD01A93238D0E28AD98A488276B7E23C8BDA36F372F7C874665204B1BA0F737761D02FD9F996F"),
+            //        PasswordSalt = System.Text.Encoding.UTF8.GetBytes("0xEF3F41A7E8536E4C51296379191D2A51334584F1F0A1B91121834111F3D6AFB672A7C88DB6DA6D0BF535FC9FBD9B9CB890209F1C6B5426D7461FAEEC0564F5D87FC03197F3270AB57F684275855A0AC04531DF4174CDEC68B9BCD07D09EE66A3CC801F7407C805161D2E37220A752FAB34385243B05EA480810CA70163F62F48"),
+            //        AcceptsMessages = true,
+            //        Role = "Customer"
+            //    },
+            //    new User
+            //    {
+            //        Id = 3,
+            //        Name = "Admin",
+            //        Email = "admin@gmail.com",
+            //        DateCreated = DateTime.Now,
+            //        PasswordHash = System.Text.Encoding.UTF8.GetBytes("0x94406732BF8123B4180CAE4C6ED1AD287895C7F9F59B621680D9C3248F442BB34A0BA845C5A29053B659FA2C2F3CAEB519A7F3E6D8CF1CBE141A12F5B8A378B5"),
+            //        PasswordSalt = System.Text.Encoding.UTF8.GetBytes("0xC039E0C597C2674C95834CE115E191B81CAEE9CFC3549D25A827CA846651385F6154A62A17B438C3A5CE12F352C4892296ADB0C3054206FC3A0ECE53BDF4E781A14047AF386FDB9588BFAB87AE585AF21CAF9329321195D75644D196C6FC1A348CD0A2FC603732F4AE5AA9179465542D71D759E480C677537CE67CCC604C3F5D"),
+            //        AcceptsMessages = true,
+            //        Role = "Customer"
+            //    });
+
+            //modelBuilder.Entity<UserInterest>().HasData(
+            //    new UserInterest
+            //    {
+            //        Id = 1,
+            //        UserId = 1,
+            //        Books = true,
+            //        Movies = true,
+            //        VideoGames = true,
+            //        Sports = false,
+            //        Clothing = false,
+            //        Default = false
+            //    },
+            //    new UserInterest
+            //    {
+            //        Id = 2,
+            //        UserId = 2,
+            //        Books = false,
+            //        Movies = true,
+            //        VideoGames = true,
+            //        Sports = true,
+            //        Clothing = false,
+            //        Default = false
+            //    },
+            //    new UserInterest
+            //    {
+            //        Id = 3,
+            //        UserId = 3,
+            //        Books = true,
+            //        Movies = false,
+            //        VideoGames = false,
+            //        Sports = true,
+            //        Clothing = true,
+            //        Default = false
+            //    });
         }
 
 

@@ -4,18 +4,16 @@ using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlazorEcommerce.Server.Migrations
+namespace BlazorEcommerce.Server.Migrations.Sql
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211209203920_ProductVisibleDeleteFlags")]
-    partial class ProductVisibleDeleteFlags
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,34 +31,27 @@ namespace BlazorEcommerce.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Zip")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -102,11 +93,9 @@ namespace BlazorEcommerce.Server.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Visible")
@@ -139,6 +128,22 @@ namespace BlazorEcommerce.Server.Migrations
                             Deleted = false,
                             Name = "Video Games",
                             Url = "video-games",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Deleted = false,
+                            Name = "Sports",
+                            Url = "sports",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Deleted = false,
+                            Name = "Clothing",
+                            Url = "clothing",
                             Visible = true
                         });
                 });
@@ -206,14 +211,12 @@ namespace BlazorEcommerce.Server.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Featured")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -350,6 +353,72 @@ namespace BlazorEcommerce.Server.Migrations
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
                             Title = "Super Nintendo Entertainment System",
                             Visible = true
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Nike Hypervenom is a football boot manufactured by Nike. This type of boot is said to be for traction, power, and agility, designed for deceptive players. Therefore, it is endorsed/worn by players, notably forwards, such as Robert Lewandowski, Harry Kane, Edinson Cavani, Gonzalo Higuaín, Mauro Icardi and Thiago. In 2017, 18-year-old prodigy Kylian Mbappé was given his own personalised boots, the Nike Hypervenom 3.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/HypervenomX_Finale_Turf.jpg/250px-HypervenomX_Finale_Turf.jpg",
+                            Title = "Nike Hypervenom",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "The Adidas Telstar 18 was the official match ball of the 2018 FIFA World Cup, which was held in the Russian Federation. It was designed by the company Adidas, a FIFA Partner and FIFA World Cup official match ball supplier since 1970, and based on the concept of the first Adidas's World Cup match ball.",
+                            Featured = false,
+                            ImageUrl = "https://images.unsplash.com/photo-1511886929837-354d827aae26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
+                            Title = "Adidas Telstar 18",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            Deleted = false,
+                            Description = "Pure and simply Liverpudlian red. Show that your support means more than any other club with this Liverpool home Stadium shirt.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/06/9.jpg",
+                            Title = "Liverpool FC 21/22 Home Kit",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Run with it. Step into these adidas U_Path Run Shoes and take your style game to the finish line. With a sleek feel and futuristic look, the mesh upper has a bungee heel overlay that delivers stretchy support. Move in comfort all day with the EVA midsole.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/28-1.jpg",
+                            Title = "Adidas U_Path Run Shoes – Black",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "The Nike Winflo 8 brings back the cushioning you love and pairs it with details like a translucent upper and Flywire technology. The result is better stability for long runs.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_705,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/05/38-1.jpg",
+                            Title = "Nike Winflo 8 Running Sneaker",
+                            Visible = true
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 5,
+                            Deleted = false,
+                            Description = "Strap up in these adidas running shoes and you’re set for a jog in the park followed by coffee with friends. With a mesh upper for outstanding breathability, they’re meant to deliver comfort all day long. A durable rubber outsole gives you a solid foundation no matter how busy your schedule.",
+                            Featured = false,
+                            ImageUrl = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_800,h_800/https://www.mysportskit.com.ng/wp-content/uploads/2022/04/20.webp",
+                            Title = "Adidas Run Falcon 2.0 Shoes",
+                            Visible = true
                         });
                 });
 
@@ -362,7 +431,6 @@ namespace BlazorEcommerce.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -449,6 +517,60 @@ namespace BlazorEcommerce.Server.Migrations
                     b.ToTable("ProductVariants");
 
                     b.HasData(
+                        new
+                        {
+                            ProductId = 17,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 229.99m,
+                            Price = 229.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 59.99m,
+                            Price = 59.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 29.99m,
+                            Price = 29.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 132.99m,
+                            Price = 132.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 109.99m,
+                            Price = 109.99m,
+                            Visible = true
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            ProductTypeId = 1,
+                            Deleted = false,
+                            OriginalPrice = 90.00m,
+                            Price = 90.00m,
+                            Visible = true
+                        },
                         new
                         {
                             ProductId = 1,
@@ -604,7 +726,122 @@ namespace BlazorEcommerce.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.Property<int>("LikedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikedReviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikedByUserId", "LikedReviewId");
+
+                    b.HasIndex("LikedReviewId");
+
+                    b.ToTable("ReviewLikes");
+                });
+
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("AcceptsMessages")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Books")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Clothing")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Default")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Movies")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Sports")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("VideoGames")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserInterests");
+                });
+
+            modelBuilder.Entity("Shared.ChatMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FromUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ToUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -615,25 +852,32 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MadeByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("MadeByUserId");
+
+                    b.HasIndex("OnProductId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Address", b =>
@@ -702,6 +946,70 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "LikedByUser")
+                        .WithMany("UserReviewLikes")
+                        .HasForeignKey("LikedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shared.Review", "LikedReview")
+                        .WithMany("LikedByUsers")
+                        .HasForeignKey("LikedReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LikedByUser");
+
+                    b.Navigation("LikedReview");
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "User")
+                        .WithOne("UserInterests")
+                        .HasForeignKey("BlazorEcommerce.Shared.UserInterest", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Shared.ChatMessage", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "FromUser")
+                        .WithMany("ChatMessagesFromUsers")
+                        .HasForeignKey("FromUserId")
+                        .IsRequired();
+
+                    b.HasOne("BlazorEcommerce.Shared.User", "ToUser")
+                        .WithMany("ChatMessagesToUsers")
+                        .HasForeignKey("ToUserId")
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.User", "MadeBy")
+                        .WithMany("UserReviews")
+                        .HasForeignKey("MadeByUserId")
+                        .IsRequired();
+
+                    b.HasOne("BlazorEcommerce.Shared.Product", "OnProduct")
+                        .WithMany("ReviewsOnProduct")
+                        .HasForeignKey("OnProductId")
+                        .IsRequired();
+
+                    b.Navigation("MadeBy");
+
+                    b.Navigation("OnProduct");
+                });
+
             modelBuilder.Entity("BlazorEcommerce.Shared.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -709,13 +1017,29 @@ namespace BlazorEcommerce.Server.Migrations
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Product", b =>
                 {
+                    b.Navigation("ReviewsOnProduct");
+
                     b.Navigation("Variants");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
                 {
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
+
+                    b.Navigation("ChatMessagesFromUsers");
+
+                    b.Navigation("ChatMessagesToUsers");
+
+                    b.Navigation("UserInterests");
+
+                    b.Navigation("UserReviewLikes");
+
+                    b.Navigation("UserReviews");
+                });
+
+            modelBuilder.Entity("Shared.Review", b =>
+                {
+                    b.Navigation("LikedByUsers");
                 });
 #pragma warning restore 612, 618
         }

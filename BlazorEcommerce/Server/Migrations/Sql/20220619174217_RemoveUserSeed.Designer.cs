@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlazorEcommerce.Server.Migrations
+namespace BlazorEcommerce.Server.Migrations.Sql
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220611202803_ReviewRating")]
-    partial class ReviewRating
+    [Migration("20220619174217_RemoveUserSeed")]
+    partial class RemoveUserSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

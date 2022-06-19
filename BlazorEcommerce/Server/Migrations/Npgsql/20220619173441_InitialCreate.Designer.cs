@@ -3,58 +3,58 @@ using System;
 using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BlazorEcommerce.Server.Migrations
+namespace BlazorEcommerce.Server.Migrations.NpgSql
 {
-    [DbContext(typeof(DataContext))]
-    [Migration("20220611094607_UserInterestsClass")]
-    partial class UserInterestsClass
+    [DbContext(typeof(NpgSqlContext))]
+    [Migration("20220619173441_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Zip")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -67,16 +67,16 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.CartItem", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "ProductId", "ProductTypeId");
 
@@ -87,21 +87,21 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -154,18 +154,18 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -175,19 +175,19 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.OrderItem", b =>
                 {
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("OrderId", "ProductId", "ProductTypeId");
 
@@ -202,31 +202,31 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Featured")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -428,12 +428,12 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -495,22 +495,22 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.ProductVariant", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("ProductId", "ProductTypeId");
 
@@ -731,10 +731,10 @@ namespace BlazorEcommerce.Server.Migrations
             modelBuilder.Entity("BlazorEcommerce.Shared.ReviewLikes", b =>
                 {
                     b.Property<int>("LikedByUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LikedReviewId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("LikedByUserId", "LikedReviewId");
 
@@ -747,64 +747,99 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("AcceptsMessages")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AcceptsMessages = false,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 41, 193, DateTimeKind.Local).AddTicks(7860),
+                            Email = "jennychris2002@yahoo.co.uk",
+                            Name = "Jenny",
+                            PasswordHash = new byte[] { 48, 120, 66, 68, 48, 55, 66, 70, 68, 56, 50, 70, 48, 69, 56, 67, 50, 53, 54, 70, 68, 65, 52, 66, 54, 51, 67, 68, 69, 70, 66, 55, 52, 55, 65, 68, 48, 51, 70, 54, 55, 53, 48, 69, 56, 57, 68, 70, 48, 53, 51, 68, 55, 48, 52, 70, 67, 69, 57, 67, 48, 68, 48, 50, 50, 55, 51, 48, 54, 51, 57, 57, 55, 52, 67, 69, 66, 66, 66, 67, 69, 70, 65, 48, 50, 54, 51, 55, 56, 48, 55, 50, 52, 56, 52, 67, 66, 57, 65, 48, 69, 66, 52, 49, 67, 65, 68, 49, 53, 69, 56, 69, 54, 67, 65, 56, 49, 54, 48, 69, 57, 53, 68, 57, 53, 69, 52, 69, 54, 68 },
+                            PasswordSalt = new byte[] { 48, 120, 49, 48, 53, 52, 48, 56, 57, 69, 54, 68, 65, 55, 50, 70, 67, 53, 68, 49, 67, 49, 52, 66, 70, 57, 49, 52, 70, 48, 65, 68, 56, 51, 50, 66, 57, 65, 52, 69, 53, 52, 65, 66, 48, 48, 56, 55, 49, 50, 56, 50, 55, 57, 66, 53, 57, 66, 53, 69, 48, 67, 54, 67, 48, 50, 54, 55, 69, 66, 48, 55, 56, 70, 65, 66, 67, 70, 66, 49, 49, 49, 54, 57, 53, 56, 70, 53, 53, 55, 56, 57, 68, 50, 50, 69, 54, 56, 70, 70, 65, 57, 50, 53, 69, 67, 55, 57, 48, 53, 65, 54, 57, 49, 50, 53, 65, 69, 55, 69, 54, 69, 57, 51, 69, 65, 67, 55, 50, 54, 50, 70, 55, 53, 53, 51, 51, 51, 53, 52, 50, 51, 54, 68, 53, 54, 70, 66, 68, 55, 53, 48, 51, 50, 70, 70, 49, 68, 49, 53, 50, 50, 69, 66, 56, 49, 50, 66, 65, 49, 54, 65, 54, 66, 54, 67, 70, 55, 53, 51, 48, 51, 48, 57, 67, 48, 66, 49, 67, 53, 51, 49, 50, 53, 55, 70, 48, 48, 57, 54, 48, 51, 54, 57, 67, 66, 49, 66, 48, 56, 54, 55, 51, 57, 70, 50, 53, 52, 69, 49, 56, 48, 54, 50, 65, 53, 54, 68, 49, 53, 57, 65, 52, 57, 52, 67, 49, 67, 51, 51, 54, 52, 55, 70, 54, 69, 65, 52, 49, 53, 54, 56, 56, 52, 67, 54, 65, 67 },
+                            Role = "Customer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AcceptsMessages = true,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 41, 193, DateTimeKind.Local).AddTicks(7890),
+                            Email = "chukwuemeka.ihenacho@stu.cu.edu.ng",
+                            Name = "Chukwuemeka",
+                            PasswordHash = new byte[] { 48, 120, 69, 57, 67, 49, 65, 48, 52, 69, 68, 49, 65, 50, 50, 67, 54, 48, 66, 50, 52, 65, 56, 66, 55, 57, 68, 55, 52, 68, 49, 50, 55, 70, 65, 52, 67, 51, 49, 70, 69, 67, 55, 50, 70, 66, 54, 49, 67, 55, 51, 53, 51, 66, 68, 48, 49, 65, 57, 51, 50, 51, 56, 68, 48, 69, 50, 56, 65, 68, 57, 56, 65, 52, 56, 56, 50, 55, 54, 66, 55, 69, 50, 51, 67, 56, 66, 68, 65, 51, 54, 70, 51, 55, 50, 70, 55, 67, 56, 55, 52, 54, 54, 53, 50, 48, 52, 66, 49, 66, 65, 48, 70, 55, 51, 55, 55, 54, 49, 68, 48, 50, 70, 68, 57, 70, 57, 57, 54, 70 },
+                            PasswordSalt = new byte[] { 48, 120, 69, 70, 51, 70, 52, 49, 65, 55, 69, 56, 53, 51, 54, 69, 52, 67, 53, 49, 50, 57, 54, 51, 55, 57, 49, 57, 49, 68, 50, 65, 53, 49, 51, 51, 52, 53, 56, 52, 70, 49, 70, 48, 65, 49, 66, 57, 49, 49, 50, 49, 56, 51, 52, 49, 49, 49, 70, 51, 68, 54, 65, 70, 66, 54, 55, 50, 65, 55, 67, 56, 56, 68, 66, 54, 68, 65, 54, 68, 48, 66, 70, 53, 51, 53, 70, 67, 57, 70, 66, 68, 57, 66, 57, 67, 66, 56, 57, 48, 50, 48, 57, 70, 49, 67, 54, 66, 53, 52, 50, 54, 68, 55, 52, 54, 49, 70, 65, 69, 69, 67, 48, 53, 54, 52, 70, 53, 68, 56, 55, 70, 67, 48, 51, 49, 57, 55, 70, 51, 50, 55, 48, 65, 66, 53, 55, 70, 54, 56, 52, 50, 55, 53, 56, 53, 53, 65, 48, 65, 67, 48, 52, 53, 51, 49, 68, 70, 52, 49, 55, 52, 67, 68, 69, 67, 54, 56, 66, 57, 66, 67, 68, 48, 55, 68, 48, 57, 69, 69, 54, 54, 65, 51, 67, 67, 56, 48, 49, 70, 55, 52, 48, 55, 67, 56, 48, 53, 49, 54, 49, 68, 50, 69, 51, 55, 50, 50, 48, 65, 55, 53, 50, 70, 65, 66, 51, 52, 51, 56, 53, 50, 52, 51, 66, 48, 53, 69, 65, 52, 56, 48, 56, 49, 48, 67, 65, 55, 48, 49, 54, 51, 70, 54, 50, 70, 52, 56 },
+                            Role = "Customer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AcceptsMessages = true,
+                            DateCreated = new DateTime(2022, 6, 19, 18, 34, 41, 193, DateTimeKind.Local).AddTicks(7904),
+                            Email = "admin@gmail.com",
+                            Name = "Admin",
+                            PasswordHash = new byte[] { 48, 120, 57, 52, 52, 48, 54, 55, 51, 50, 66, 70, 56, 49, 50, 51, 66, 52, 49, 56, 48, 67, 65, 69, 52, 67, 54, 69, 68, 49, 65, 68, 50, 56, 55, 56, 57, 53, 67, 55, 70, 57, 70, 53, 57, 66, 54, 50, 49, 54, 56, 48, 68, 57, 67, 51, 50, 52, 56, 70, 52, 52, 50, 66, 66, 51, 52, 65, 48, 66, 65, 56, 52, 53, 67, 53, 65, 50, 57, 48, 53, 51, 66, 54, 53, 57, 70, 65, 50, 67, 50, 70, 51, 67, 65, 69, 66, 53, 49, 57, 65, 55, 70, 51, 69, 54, 68, 56, 67, 70, 49, 67, 66, 69, 49, 52, 49, 65, 49, 50, 70, 53, 66, 56, 65, 51, 55, 56, 66, 53 },
+                            PasswordSalt = new byte[] { 48, 120, 67, 48, 51, 57, 69, 48, 67, 53, 57, 55, 67, 50, 54, 55, 52, 67, 57, 53, 56, 51, 52, 67, 69, 49, 49, 53, 69, 49, 57, 49, 66, 56, 49, 67, 65, 69, 69, 57, 67, 70, 67, 51, 53, 52, 57, 68, 50, 53, 65, 56, 50, 55, 67, 65, 56, 52, 54, 54, 53, 49, 51, 56, 53, 70, 54, 49, 53, 52, 65, 54, 50, 65, 49, 55, 66, 52, 51, 56, 67, 51, 65, 53, 67, 69, 49, 50, 70, 51, 53, 50, 67, 52, 56, 57, 50, 50, 57, 54, 65, 68, 66, 48, 67, 51, 48, 53, 52, 50, 48, 54, 70, 67, 51, 65, 48, 69, 67, 69, 53, 51, 66, 68, 70, 52, 69, 55, 56, 49, 65, 49, 52, 48, 52, 55, 65, 70, 51, 56, 54, 70, 68, 66, 57, 53, 56, 56, 66, 70, 65, 66, 56, 55, 65, 69, 53, 56, 53, 65, 70, 50, 49, 67, 65, 70, 57, 51, 50, 57, 51, 50, 49, 49, 57, 53, 68, 55, 53, 54, 52, 52, 68, 49, 57, 54, 67, 54, 70, 67, 49, 65, 51, 52, 56, 67, 68, 48, 65, 50, 70, 67, 54, 48, 51, 55, 51, 50, 70, 52, 65, 69, 53, 65, 65, 57, 49, 55, 57, 52, 54, 53, 53, 52, 50, 68, 55, 49, 68, 55, 53, 57, 69, 52, 56, 48, 67, 54, 55, 55, 53, 51, 55, 67, 69, 54, 55, 67, 67, 67, 54, 48, 52, 67, 51, 70, 53, 68 },
+                            Role = "Customer"
+                        });
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.UserInterest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Books")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Clothing")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Default")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Movies")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Sports")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("VideoGames")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -812,27 +847,62 @@ namespace BlazorEcommerce.Server.Migrations
                         .IsUnique();
 
                     b.ToTable("UserInterests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Books = true,
+                            Clothing = false,
+                            Default = false,
+                            Movies = true,
+                            Sports = false,
+                            UserId = 1,
+                            VideoGames = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Books = false,
+                            Clothing = false,
+                            Default = false,
+                            Movies = true,
+                            Sports = true,
+                            UserId = 2,
+                            VideoGames = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Books = true,
+                            Clothing = true,
+                            Default = false,
+                            Movies = false,
+                            Sports = true,
+                            UserId = 3,
+                            VideoGames = false
+                        });
                 });
 
             modelBuilder.Entity("Shared.ChatMessage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("FromUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ToUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -847,28 +917,31 @@ namespace BlazorEcommerce.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("MadeByUserId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("OnProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReviewText")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Visible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
