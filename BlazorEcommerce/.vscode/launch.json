@@ -3,9 +3,11 @@
     "configurations": [
         {
             "name": "Launch and Debug Standalone Blazor WebAssembly App",
-            "type": "pwa-msedge",
+            "type": "blazorwasm",
             "request": "launch",
-            "cwd": "${workspaceFolder}/Server"
+            "cwd": "${workspaceFolder}/Server",
+            "url": "https://localhost:7226",
+            "browser": "edge",
         }
     ]
 }
