@@ -49,8 +49,8 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 
 builder.Services.AddPredictionEnginePool<ProductDataModel, ProductDataPrediction>()
-    .FromFile(modelName: "ProductPredictionModel", filePath: "MLModels/ProductRecommenderModel.zip", watchForChanges: true);
-
+    .FromFile(modelName: "ProductPredictionModel", filePath: "BlazorEcommerce/Server/MLModels/ProductRecommenderModel.zip", watchForChanges: true);
+// C:\Users\hidde\My Stuff\School\Final Year Project\final-year-project\BlazorEcommerce\Server\MLModels\ProductRecommenderModel.zip
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
