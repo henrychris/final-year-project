@@ -32,6 +32,7 @@
         ProductService.ProductsChanged += StateHasChanged;
         await ProductService.GetAllProducts();
         await GetRecommendedProducts();
+        StateHasChanged();
     }
 
     async Task GetRecommendedProducts()
