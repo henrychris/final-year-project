@@ -8,11 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\MLModels\ProductRecommenderModel.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Shared\RecommendedProducts.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Shared\RecommendedProducts.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\MLModels\ProductRecommenderModel.zip" />
   </ItemGroup>
 
   <ItemGroup>
