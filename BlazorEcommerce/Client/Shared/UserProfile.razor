@@ -32,6 +32,8 @@ else
         var user = await UserService.GetById(Id);
         Email = user.Data.Email;
 
+        // todo if userID == loggedInUser
+        // NavigationManager.NavigateTo("profile");
         AcceptsMessages = await UserService.CheckIfUserAcceptsMessages(Id);
     }
     // function to get user details.

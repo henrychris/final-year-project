@@ -6,16 +6,16 @@ public class ReviewService : IReviewService
 {
     private readonly DataContext _context;
 
-    public ReviewService(DataContext context, IHttpContextAccessor httpContextAccessor)
+    public ReviewService(DataContext context)
     {
         _context = context;
     }
-    public async Task<ServiceResponse<Review>> CheckIfUserPurchasedProduct(Review review)
-    {
-        // Basically check user order history for this product.
-        // reuse the product search algorithm
-        throw new NotImplementedException();
-    }
+    //public async Task<ServiceResponse<Review>> CheckIfUserPurchasedProduct(Review review)
+    //{
+    //    // Basically check user order history for this product.
+    //    // reuse the product search algorithm
+    //    throw new NotImplementedException();
+    //}
 
     public async Task<ServiceResponse<Review>> CreateReview(Review review)
     {

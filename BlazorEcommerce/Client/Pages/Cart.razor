@@ -89,7 +89,8 @@ else
 
     private async Task PlaceOrder()
     {
-        string url = await OrderService.PlaceOrder();
-        NavigationManager.NavigateTo(url);
+        // navigate straight to the order-success page
+        await OrderService.PlaceOrder();
+        NavigationManager.NavigateTo("https://localhost:7226/order-success");
     }
 }

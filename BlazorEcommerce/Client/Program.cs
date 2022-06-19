@@ -11,6 +11,7 @@ global using BlazorEcommerce.Client.Services.ProductTypeService;
 using BlazorEcommerce.Client;
 using BlazorEcommerce.Client.Services.ChatService;
 using BlazorEcommerce.Client.Services.LikesService;
+using BlazorEcommerce.Client.Services.PredictService;
 using BlazorEcommerce.Client.Services.ReviewService;
 using BlazorEcommerce.Client.Services.UserService;
 using Microsoft.AspNetCore.Components.Web;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.LocalStorage;
 using MudBlazor;
 using MudBlazor.Services;
+using Radzen;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -36,6 +38,12 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
+builder.Services.AddScoped<IPredictService, PredictService>();
+builder.Services.AddScoped<Radzen.DialogService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<ContextMenuService>();
+
 builder.Services.AddMudServices(c => { c.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight; });
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

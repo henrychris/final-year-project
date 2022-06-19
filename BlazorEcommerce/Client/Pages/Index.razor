@@ -7,7 +7,14 @@
 
 @if (SearchText == null && CategoryUrl == null)
 {
-    <FeaturedProducts />
+    <AuthorizeView>
+        <NotAuthorized>
+            <FeaturedProducts />
+        </NotAuthorized>
+        <Authorized>
+            <RecommendedProducts />
+        </Authorized>
+    </AuthorizeView>
 }
 else
 {
@@ -41,7 +48,7 @@ else
             {
                 Console.WriteLine(e);
             }
-            
+
         }
     }
 }

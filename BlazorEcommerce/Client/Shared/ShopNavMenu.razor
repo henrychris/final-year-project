@@ -57,8 +57,6 @@
 
         var state = await StateProvider.GetAuthenticationStateAsync();
         var user = state.User;
-        var role = user.Claims.Where(a => a.Type == ClaimTypes.Role).Select(a => a.Value).FirstOrDefault();
-        Console.WriteLine(role);
 
         CategoryService.OnChange += StateHasChanged;
 
