@@ -21,15 +21,15 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsDevelopment())
-{
-    // change this to datacontext
-    builder.Services.AddDbContext<DataContext>();
-}
-else
+//if (builder.Environment.IsDevelopment())
+//{
+//    // change this to datacontext
+//    builder.Services.AddDbContext<DataContext>();
+//}
+//else
 {
     builder.Services.AddDbContext<NpgSqlContext>();
-}
+//}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
