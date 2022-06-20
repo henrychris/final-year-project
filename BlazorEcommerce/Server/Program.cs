@@ -50,7 +50,7 @@ builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 
 // todo upload model to somewhere sha
 builder.Services.AddPredictionEnginePool<ProductDataModel, ProductDataPrediction>()
-.FromUri(modelName: "ProductPredictionModel", uri: "https://raw.githubusercontent.com/henrychris/final-year-project/master/BlazorEcommerce/Server/MLModels/ProductRecommenderModel.zip?token=GHSAT0AAAAAABUNZ2HXQYKEGYLHHJUYJEKWYVPTR6Q");
+.FromUri(modelName: "ProductPredictionModel", uri: "https://www.dropbox.com/s/mcdzx9txqahkoso/ProductRecommenderModel.zip?dl=1");
 //.FromFile(modelName: "ProductPredictionModel", filePath: "wwwroot/MLModels/ProductRecommenderModel.zip", watchForChanges: true);
 // C:\Users\hidde\My Stuff\School\Final Year Project\final-year-project\BlazorEcommerce\Server\MLModels\ProductRecommenderModel.zip
 
