@@ -33,18 +33,6 @@
         _hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/chathub")).Build();
         await _hubConnection.StartAsync();
 
-        //_hubConnection.On<string, int, int, string>("ReceiveChatNotification", (message, receiverUserId, senderUserId, email) =>
-        //{
-        //    if (CurrentUserId == receiverUserId)
-        //    {
-        //        NotificationService.Notify(new NotificationMessage
-        //            {
-        //                Detail = $"New Message from {email}!",
-        //                Duration = 4000,
-        //            });
-        //    }
-        //});
-
         var state = await StateProvider.GetAuthenticationStateAsync();
         var user = state.User;
         CurrentUserId = Convert.ToInt32(user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault());

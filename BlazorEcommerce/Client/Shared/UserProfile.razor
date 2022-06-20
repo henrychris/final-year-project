@@ -8,7 +8,7 @@
 
 @if (AcceptsMessages)
 {
-    <button @onclick="NavigateToUserChat">Send Message</button>
+    <button class="btn-primary" @onclick="NavigateToUserChat">Send Message</button>
 }
 else
 {
@@ -31,12 +31,12 @@ else
     {
         var user = await UserService.GetById(Id);
         Email = user.Data.Email;
-
-        // todo if userID == loggedInUser
-        // NavigationManager.NavigateTo("profile");
         AcceptsMessages = await UserService.CheckIfUserAcceptsMessages(Id);
+
+        var state = await StateProvider.GetAuthenticationStateAsync();
+        var stateUser = state.User;
+        var CurrentUserId = Convert.ToInt32(stateUser.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault());
+
+        if (CurrentUserId == Id) NavigationManager.NavigateTo("/profile");
     }
-    // function to get user details.
-
-
 }

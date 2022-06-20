@@ -32,15 +32,14 @@ namespace BlazorEcommerce.Client.Shared
                 await HubConnection.StartAsync();
             }
 
-            HubConnection.On<string, ChatMessage>("ReceiveMessage", async (userName, message) =>
+            HubConnection.On<string, ChatMessage>("ReceiveMessage", (userName, message) =>
             {
+                StateHasChanged();
                 if ((ContactId == message.ToUserId && CurrentUserId == message.FromUserId) || (ContactId == message.FromUserId && CurrentUserId == message.ToUserId))
                 {
-
                     if ((ContactId == message.ToUserId && CurrentUserId == message.FromUserId))
                     {
                         _messages.Add(new ChatMessage { Message = message.Message, CreatedDate = message.CreatedDate, FromUser = new User() { Email = CurrentUserEmail } });
-                        //await HubConnection.SendAsync("ChatNotificationAsync", $"New Message From {userName}", ContactId, CurrentUserId, CurrentUserEmail);
                     }
                     else if (ContactId == message.FromUserId && CurrentUserId == message.ToUserId)
                     {

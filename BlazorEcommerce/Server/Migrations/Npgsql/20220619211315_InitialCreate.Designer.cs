@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlazorEcommerce.Server.Migrations.NpgSql
 {
     [DbContext(typeof(NpgSqlContext))]
-    [Migration("20220619174243_RemoveUserSeed")]
-    partial class RemoveUserSeed
+    [Migration("20220619211315_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
